@@ -21,15 +21,20 @@ python main.py
 
 ```
 Q_System/
-├── core/           # 核心引擎模块
-│   ├── engine.py   # BacktestEngine - 回测引擎，负责数据加载和时间循环驱动
-│   ├── context.py  # Context - 上下文对象，存储账户状态和交易接口
-│   └── strategy.py # BaseStrategy - 策略抽象基类，定义 initialize/handle_bar 接口
-├── strategies/     # 策略实现
-│   └── double_ma.py # DoubleMAStrategy - 双均线策略示例
-├── data/           # 数据存储目录
-├── config.py       # 配置文件
-└── main.py         # 启动入口
+├── main.py              # (W1D2) 回测启动脚本 (无需修改)
+├── run_live.py          # (W1D3) [新增] 实盘启动脚本
+├── core/
+│   ├── __init__.py      # (空文件)
+│   ├── engine.py        # (W1D2) 回测引擎 (无需修改)
+│   ├── strategy.py      # (W1D1) 策略基类 (无需修改)
+│   ├── live_runner.py   # (W1D3) [新增] 实盘引擎
+│   └── context.py       # (W1D3) [修改] 上下文对象 (核心安全锁)
+├── strategies/
+│   ├── __init__.py      # (空文件)
+│   └── double_ma.py     # (W1D2) 双均线策略 (无需修改)
+└── data/                # 本地数据存储
+
+更新时间：2025/12/16 20:52
 ```
 
 ### 数据流
