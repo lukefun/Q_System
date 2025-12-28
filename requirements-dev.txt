@@ -1,0 +1,18 @@
+# Q_System 开发环境依赖
+# 包含测试和开发工具
+
+-r requirements.txt
+
+# 测试框架
+pytest>=8.0.0,<9.0.0
+pytest-cov>=5.0.0,<6.0.0
+pytest-asyncio>=0.24.0,<1.0.0
+pytest-xdist>=3.5.0,<4.0.0
+pytest-timeout>=2.0.0,<3.0.0
+hypothesis>=6.100.0,<7.0.0
+coverage>=7.0.0,<8.0.0
+
+# 代码质量 (可选)
+# black>=23.0.0,<24.0.0
+# flake8>=6.0.0,<7.0.0
+# mypy>=1.0.0,<2.0.0
