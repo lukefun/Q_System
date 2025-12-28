@@ -1,4 +1,4 @@
-# Python
+# Python 缓存文件
 __pycache__/
 *.py[cod]
 *.pyo
@@ -9,13 +9,14 @@ venv/
 env/
 .venv/
 
-# 环境变量
+# 环境变量，核心敏感配置
 .env
 .env.local
 
-# IDE
+# IDE 配置文件 (VSCode/PyCharm/其他)
 .idea/
 .vscode/
+.claude/
 *.swp
 *.swo
 
@@ -28,6 +29,7 @@ Thumbs.db
 logs/
 
 # 数据缓存 (XtQuant下载的数据可能较大)
+data/
 data/*.csv
 data/*.pkl
 data/*.h5
