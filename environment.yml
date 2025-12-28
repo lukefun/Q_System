@@ -1,0 +1,43 @@
+# Q_System Conda 环境配置
+# 使用方法: conda env create -f environment.yml
+name: quants
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # Python 版本 (miniQMT 硬性要求)
+  - python=3.8
+
+  # 基础工具
+  - pip
+  - setuptools
+  - wheel
+
+  # Pip 安装的包
+  - pip:
+      # 数据处理
+      - pandas>=2.0.0,<3.0.0
+      - numpy>=1.24.0,<2.0.0
+      - matplotlib>=3.7.0,<4.0.0
+
+      # 配置管理
+      - pydantic>=2.0.0,<3.0.0
+      - pydantic-settings>=2.0.0,<3.0.0
+      - python-dotenv>=1.0.0,<2.0.0
+
+      # 网络请求
+      - requests>=2.30.0,<3.0.0
+      - tqdm>=4.60.0,<5.0.0
+
+      # 测试框架
+      - pytest>=8.0.0,<9.0.0
+      - pytest-cov>=5.0.0,<6.0.0
+      - pytest-asyncio>=0.24.0,<1.0.0
+      - pytest-xdist>=3.5.0,<4.0.0
+      - hypothesis>=6.100.0,<7.0.0
+
+      # 中文处理
+      - jieba>=0.42.0,<1.0.0
+
+      # 注意: xtquant 需单独安装
+      # pip install xtquant
