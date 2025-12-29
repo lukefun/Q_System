@@ -1,4 +1,9 @@
 """
+T2: 构建实盘引擎 —— LiveRunner
+目标：替代 BacktestEngine。它不再循环历史数据，而是订阅实时行情。
+行动：创建 core/live_runner.py。
+
+
 文件 2：core/live_runner.py (实盘引擎)
 核心逻辑：
     负责连接 MiniQMT。

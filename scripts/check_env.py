@@ -1,3 +1,5 @@
+# scripts\check_env.py
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
