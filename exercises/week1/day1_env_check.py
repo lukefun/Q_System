@@ -38,6 +38,7 @@ def exercise_1_check_python_version():
 
 
 # === 练习2: 测试xtquant导入 ===
+from datetime import datetime # 导入datetime以防止未使用导入警告
 def exercise_2_test_xtquant_import():
     """
     练习2: 测试xtquant模块是否可以正常导入
@@ -57,9 +58,21 @@ def exercise_2_test_xtquant_import():
         
         # 测试获取交易日列表
         trading_dates = xtdata.get_trading_dates('SH')
+
         if trading_dates and len(trading_dates) > 0:
-            print(f"✓ 获取交易日成功，共 {len(trading_dates)} 个交易日")
-            print(f"  最近5个交易日: {trading_dates[-5:]}")
+
+
+            # xtdata 通常返回毫秒时间戳（int），转换为 YYYY-MM-DD
+            def _to_date_str(ts):
+                try:
+                    ts_int = int(ts)
+                    return datetime.fromtimestamp(ts_int / 1000).strftime('%Y-%m-%d')
+                except Exception:
+                    return str(ts)
+            readable_dates = [_to_date_str(d) for d in trading_dates]
+
+            print(f"✓ 获取交易日成功，共 {len(readable_dates)} 个交易日")
+            print(f"  最近5个交易日: {readable_dates[-5:]}")
         else:
             print("⚠ 获取交易日返回空数据")
             
