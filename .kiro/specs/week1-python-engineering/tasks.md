@@ -11,24 +11,24 @@
   - 预计时间: 2-3小时
   - _Requirements: 1.1, 1.2, 1.3, 1.4_
 
-  - [ ] 1.1 运行环境快速检查
+  - [x] 1.1 运行环境快速检查
     - 双击运行 `check.bat`
     - 观察输出，确认无明显错误
     - _Requirements: 1.2_
 
-  - [ ] 1.2 运行详细环境检查脚本
+  - [x] 1.2 运行详细环境检查脚本
     - 执行 `conda activate quants`
     - 执行 `python scripts/check_env.py`
     - 确认所有检查项显示 PASS
     - _Requirements: 1.1, 1.2, 1.3_
 
-  - [ ] 1.3 测试xtquant模块导入
+  - [x] 1.3 测试xtquant模块导入
     - 创建 `exercises/week1/day1_env_check.py`
     - 编写代码测试 `from xtquant import xtdata` 是否成功
     - 测试 `xtdata.get_trading_dates('SH')` 是否返回数据
     - _Requirements: 1.4_
 
-  - [ ] 1.4 理解隔离模式启动
+  - [x] 1.4 理解隔离模式启动
     - 阅读 `start_isolated.bat` 内容
     - 理解 `PYTHONNOUSERSITE=1` 的作用
     - 在学习笔记中记录理解
