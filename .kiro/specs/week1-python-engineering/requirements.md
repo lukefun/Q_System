@@ -18,7 +18,7 @@
 
 **User Story:** 作为量化学习者，我希望拥有一个纯净且正确配置的Python 3.8环境，以便能够运行MiniQMT和XtQuant相关代码。
 
-#### Acceptance Criteria
+#### Acceptance Criteria for Pandas Data Cleaning
 
 1. THE Conda_Environment SHALL 使用Python 3.8.x版本
 2. WHEN 执行 `python scripts/check_env.py` 时，THE Check_Script SHALL 显示所有检查项为PASS状态
@@ -30,7 +30,7 @@
 
 **User Story:** 作为量化学习者，我希望掌握量化开发常用的Python语法特性，以便能够编写高效的数据处理代码。
 
-#### Acceptance Criteria
+#### Acceptance Criteria for Python Core Syntax Mastery
 
 1. THE Learner SHALL 能够使用列表推导式处理股票代码列表
 2. THE Learner SHALL 能够使用dict.get()安全获取字典值并设置默认值
@@ -41,7 +41,7 @@
 
 **User Story:** 作为量化学习者，我希望掌握Pandas的核心数据操作，以便能够清洗和处理金融数据。
 
-#### Acceptance Criteria
+#### Acceptance Criteria for Environment Configuration
 
 1. THE Learner SHALL 能够使用loc/iloc进行DataFrame索引操作
 2. THE Learner SHALL 能够使用fillna/dropna处理缺失值
@@ -52,7 +52,7 @@
 
 **User Story:** 作为量化学习者，我希望掌握Pandas时间序列操作，以便能够进行K线周期转换和技术指标计算。
 
-#### Acceptance Criteria
+#### Acceptance Criteria for Pandas Time Series Processing
 
 1. THE Learner SHALL 能够使用resample将1分钟K线转换为5分钟/日线
 2. THE Learner SHALL 能够使用rolling计算移动平均线(MA5, MA20)
@@ -63,7 +63,7 @@
 
 **User Story:** 作为量化学习者，我希望理解并遵循标准的Python项目结构，以便代码具有良好的可维护性。
 
-#### Acceptance Criteria
+#### Acceptance Criteria for Git Version Control
 
 1. THE Project SHALL 包含core、data、strategies、logs、config等标准目录
 2. THE Learner SHALL 理解__init__.py文件的作用和使用方式
@@ -74,7 +74,7 @@
 
 **User Story:** 作为量化学习者，我希望掌握Git基本操作，以便能够安全地管理和备份代码。
 
-#### Acceptance Criteria
+#### Acceptance Criteria for Weekly Review and Refactoring
 
 1. THE Learner SHALL 能够执行git init初始化仓库
 2. THE Learner SHALL 能够执行git add和git commit提交代码变更

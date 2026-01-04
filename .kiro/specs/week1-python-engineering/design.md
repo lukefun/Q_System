@@ -5,13 +5,14 @@
 本设计文档为量化交易系统学习计划第一周提供详细的学习方案。采用"每日任务卡"模式，将7天的学习内容分解为可执行的原子任务，每个任务包含理论学习、代码练习和验收检查三个环节。
 
 学习方法论：
+
 - **理论先行**：每个知识点先理解"为什么"
 - **代码验证**：通过实际编码巩固理解
 - **即时反馈**：每个练习都有明确的验收标准
 
 ## Architecture
 
-```
+```plaintext
 Week 1 学习架构
 ├── Day 1: 环境配置 (基础设施)
 ├── Day 2: Python核心语法 (语言基础)
@@ -27,7 +28,8 @@ Week 1 学习架构
 ### 学习模块组件
 
 #### 1. 练习脚本目录结构
-```
+
+```plaintext
 exercises/
 ├── week1/
 │   ├── day1_env_check.py      # Day1 环境验证练习
@@ -39,7 +41,9 @@ exercises/
 ```
 
 #### 2. 每日任务卡接口
+
 每个练习脚本遵循统一结构：
+
 ```python
 """
 Day X: [主题名称]
@@ -68,6 +72,7 @@ if __name__ == '__main__':
 ## Data Models
 
 ### 学习进度追踪模型
+
 ```python
 class DailyProgress:
     day: int                    # 第几天
@@ -85,12 +90,14 @@ class DailyProgress:
 **学习目标**: 确保Python 3.8环境正确配置，MiniQMT可用
 
 **任务清单**:
+
 1. 运行 `check.bat` 快速检查环境
 2. 运行 `python scripts/check_env.py` 详细检查
 3. 测试 xtquant 模块导入
 4. 理解隔离模式启动的作用
 
 **验收标准**:
+
 - check_env.py 所有检查项显示 PASS
 - 能成功 `from xtquant import xtdata`
 
@@ -99,12 +106,14 @@ class DailyProgress:
 **学习目标**: 掌握量化开发常用的Python语法特性
 
 **知识点**:
+
 1. 列表推导式 - 快速处理股票代码列表
 2. dict.get() - 安全获取字典值
 3. try-except-finally - 异常处理
 4. 装饰器 - 函数增强
 
 **练习代码示例**:
+
 ```python
 # 练习1: 列表推导式
 stock_codes = ['000001', '000002', '600000', '600001']
@@ -145,11 +154,13 @@ def timer(func):
 **学习目标**: 掌握Pandas核心数据操作
 
 **知识点**:
+
 1. loc/iloc 索引操作
 2. fillna/dropna 缺失值处理
 3. merge/concat 数据合并
 
 **练习代码示例**:
+
 ```python
 import pandas as pd
 import numpy as np
@@ -189,11 +200,13 @@ merged = pd.merge(df1, df2, on='code')
 **学习目标**: 掌握K线数据处理和技术指标计算
 
 **知识点**:
+
 1. resample - K线周期转换
 2. rolling - 移动平均计算
 3. shift/diff - 涨跌计算
 
 **练习代码示例**:
+
 ```python
 import pandas as pd
 
@@ -225,12 +238,14 @@ df['pct_change'] = df['close'].pct_change() * 100  # 涨跌幅(%)
 **学习目标**: 理解并遵循标准Python项目结构
 
 **知识点**:
+
 1. 目录结构设计
 2. `__init__.py` 的作用
 3. 模块导入规范
 
 **项目结构说明**:
-```
+
+```plaintext
 Q_System/
 ├── core/              # 核心模块
 │   ├── __init__.py   # 包标识文件，可定义公开接口
@@ -247,6 +262,7 @@ Q_System/
 ```
 
 **`__init__.py` 示例**:
+
 ```python
 # core/__init__.py
 from .context import Context
@@ -261,6 +277,7 @@ __all__ = ['Context', 'BacktestEngine', 'BaseStrategy']
 **学习目标**: 掌握Git基本操作，建立代码备份习惯
 
 **命令清单**:
+
 ```bash
 # 初始化仓库
 git init
@@ -291,6 +308,7 @@ git checkout -- file.py     # 撤销文件修改
 **学习目标**: 整理本周代码，形成可复用的函数库
 
 **重构任务**:
+
 1. 将练习代码整理为 `utils/` 工具库
 2. 为每个函数添加 docstring
 3. 删除调试代码和冗余注释
@@ -315,7 +333,7 @@ git checkout -- file.py     # 撤销文件修改
 ### 常见错误及解决方案
 
 | 错误类型 | 可能原因 | 解决方案 |
-|---------|---------|---------|
+| --------- | --------- | --------- |
 | ModuleNotFoundError: xtquant | 环境未正确配置 | 运行 `pip install xtquant` |
 | Python版本不匹配 | 使用了非3.8版本 | 重新创建conda环境 |
 | 多版本冲突 | 系统存在多个Python | 使用 `start_isolated.bat` |
@@ -330,6 +348,7 @@ git checkout -- file.py     # 撤销文件修改
 **集成测试**: Day 7 周复盘时，验证所有模块可正确导入和调用。
 
 **手动验证清单**:
+
 - [ ] Day 1: check_env.py 全部 PASS
 - [ ] Day 2: 4个Python语法练习完成
 - [ ] Day 3: 3个Pandas练习完成
@@ -341,6 +360,7 @@ git checkout -- file.py     # 撤销文件修改
 ### 学习效果评估
 
 每日学习结束后，回答以下问题：
+
 1. 今天学到了什么新知识？
 2. 哪个知识点最难理解？
 3. 这些知识如何应用到量化交易中？

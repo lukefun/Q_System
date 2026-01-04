@@ -19,7 +19,7 @@ python main.py
 
 ### 核心组件
 
-```
+```plaintext
 Q_System/
 ├── main.py              # (W1D2) 回测启动脚本 (无需修改)
 ├── run_live.py          # (W1D3) [新增] 实盘启动脚本
@@ -47,12 +47,14 @@ Q_System/
 ### 策略开发模式
 
 所有策略必须继承 `BaseStrategy` 并实现两个抽象方法：
+
 - `initialize(context)`: 策略启动时执行一次，用于设置参数
 - `handle_bar(context, bar_dict)`: 每根 K 线执行一次，用于信号判断和下单
 
 ### Context 对象
 
 `Context` 是策略与引擎的桥梁，包含：
+
 - `cash` / `total_asset`: 资金账户信息
 - `positions`: 持仓字典 `{stock_code: volume}`
 - `current_dt`: 当前时间
