@@ -11,7 +11,7 @@
 
 ## 项目结构
 
-```
+```plaintext
 Q_System/
 ├── main.py              # 回测启动脚本
 ├── run_live.py          # 实盘启动脚本
@@ -42,7 +42,7 @@ Q_System/
 ### 系统要求
 
 | 项目 | 要求 |
-|------|------|
+| ------ | ------ |
 | Python | **3.8.x** (miniQMT 硬性要求) |
 | 操作系统 | Windows (QMT 仅支持 Windows) |
 | Conda | 推荐使用 Miniconda |
@@ -51,7 +51,7 @@ Q_System/
 ### 核心依赖
 
 | 包名 | 版本 | 说明 |
-|------|------|------|
+| ------ | ------ | ------ |
 | xtquant | 250516+ | 国金证券 QMT 交易接口 |
 | pandas | 2.0+ | 数据处理 |
 | numpy | 1.24+ | 数值计算 |
@@ -95,6 +95,7 @@ pip install -r requirements.txt
 适用于：系统安装了多个 Python 版本，存在包加载混乱
 
 **症状检测**：
+
 ```bash
 conda activate quants
 python scripts/check_env.py
@@ -102,13 +103,16 @@ python scripts/check_env.py
 ```
 
 **解决方案 A - 使用隔离模式启动 (推荐)**：
+
 ```bash
 # 双击此脚本启动开发环境
 start_isolated.bat
 ```
+
 该脚本设置 `PYTHONNOUSERSITE=1`，禁用用户全局包，确保只使用 conda 环境。
 
 **解决方案 B - 修复环境隔离**：
+
 ```bash
 # 重新安装包到 conda 环境
 scripts\fix_env_isolation.bat
@@ -186,19 +190,22 @@ conda run -n quants python main.py
 ## 环境验证
 
 ### 快速检查
+
 ```bash
 # 双击运行
 check.bat
 ```
 
 ### 详细检查
+
 ```bash
 conda activate quants
 python scripts/check_env.py
 ```
 
 ### 验证通过标准
-```
+
+```text
 [PASS] Python 版本     ← 3.8.x
 [PASS] Conda 环境      ← quants
 [PASS] 核心依赖包      ← pandas, numpy
@@ -217,6 +224,7 @@ python main.py
 ```
 
 默认配置：
+
 - 标的: 比亚迪 (002594.SZ)
 - 时间: 2025-01-01 ~ 2025-12-25
 - 策略: 双均线策略 (MA5/MA20)
@@ -260,7 +268,7 @@ class MyStrategy(BaseStrategy):
 ### Context 对象
 
 | 属性/方法 | 说明 |
-|-----------|------|
+| ---------- | ------ |
 | `cash` | 可用资金 |
 | `total_asset` | 总资产 |
 | `positions` | 持仓字典 `{stock_code: volume}` |
@@ -289,7 +297,7 @@ MANUAL_CONFIRM = True  # 下单前必须手动输入 'y' 确认
 
 实盘模式下，每笔订单都会阻塞等待用户确认：
 
-```
+```text
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! [教学实盘拦截] 正准备发送交易指令 !!!
 !!! 标的: 002594.SZ
@@ -301,7 +309,7 @@ MANUAL_CONFIRM = True  # 下单前必须手动输入 'y' 确认
 
 ## 数据流
 
-```
+```text
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │   XtQuant   │────▶│   Engine    │────▶│  Strategy   │
 │  (数据源)   │     │ (时间循环)  │     │ (交易逻辑)  │
