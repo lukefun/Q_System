@@ -132,6 +132,20 @@ conda activate quants
 # 3. 安装依赖
 pip install -r requirements.txt
 
+    ```text
+    完整命令示例 (以阿里源为例):
+    requirements-dev.txt
+    
+    运行
+    pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+    常用国内镜像源地址：
+    阿里云 (推荐): https://mirrors.aliyun.com/pypi/simple/
+    清华大学: https://pypi.tuna.tsinghua.edu.cn/simple/
+    华为云: https://repo.huaweicloud.com/repository/pypi/simple/
+    豆瓣: http://pypi.douban.com/simple/
+    中国科学技术大学: https://pypi.mirrors.ustc.edu.cn/simple/
+    ```
+
 # 4. 安装 xtquant
 pip install xtquant
 
