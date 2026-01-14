@@ -11,7 +11,7 @@
 
 ## 项目结构
 
-```text
+```plaintext
 Q_System/
 ├── main.py              # 回测启动脚本
 ├── run_live.py          # 实盘启动脚本
@@ -42,7 +42,7 @@ Q_System/
 ### 系统要求
 
 | 项目 | 要求 |
-| ---- | ---- |
+| ------ | ------ |
 | Python | **3.8.x** (miniQMT 硬性要求) |
 | 操作系统 | Windows (QMT 仅支持 Windows) |
 | Conda | 推荐使用 Miniconda |
@@ -51,7 +51,7 @@ Q_System/
 ### 核心依赖
 
 | 包名 | 版本 | 说明 |
-| ---- | ---- | ---- |
+| ------ | ------ | ------ |
 | xtquant | 250516+ | 国金证券 QMT 交易接口 |
 | pandas | 2.0+ | 数据处理 |
 | numpy | 1.24+ | 数值计算 |
@@ -131,6 +131,20 @@ conda activate quants
 
 # 3. 安装依赖
 pip install -r requirements.txt
+
+    ```text
+    完整命令示例 (以阿里源为例):
+    requirements-dev.txt
+    
+    运行
+    pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
+    常用国内镜像源地址：
+    阿里云 (推荐): https://mirrors.aliyun.com/pypi/simple/
+    清华大学: https://pypi.tuna.tsinghua.edu.cn/simple/
+    华为云: https://repo.huaweicloud.com/repository/pypi/simple/
+    豆瓣: http://pypi.douban.com/simple/
+    中国科学技术大学: https://pypi.mirrors.ustc.edu.cn/simple/
+    ```
 
 # 4. 安装 xtquant
 pip install xtquant
@@ -268,7 +282,7 @@ class MyStrategy(BaseStrategy):
 ### Context 对象
 
 | 属性/方法 | 说明 |
-| --------- | ---- |
+|-----------|------|
 | `cash` | 可用资金 |
 | `total_asset` | 总资产 |
 | `positions` | 持仓字典 `{stock_code: volume}` |
