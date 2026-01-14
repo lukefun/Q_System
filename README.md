@@ -282,7 +282,7 @@ class MyStrategy(BaseStrategy):
 ### Context 对象
 
 | 属性/方法 | 说明 |
-|-----------|------|
+| ---------- | ------ |
 | `cash` | 可用资金 |
 | `total_asset` | 总资产 |
 | `positions` | 持仓字典 `{stock_code: volume}` |
