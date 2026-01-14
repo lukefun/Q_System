@@ -69,6 +69,7 @@ import sys        # 系统相关功能：版本信息、路径管理、退出码
 import os         # 操作系统接口：环境变量、路径操作
 import platform   # 平台信息：操作系统、主机名
 import io         # IO流处理：解决 Windows 编码问题
+from datetime import datetime  # 日期时间：获取当前运行时间
 
 # =============================================================================
 # Windows 编码问题修复 Fix Windows Encoding Issues
@@ -90,6 +91,19 @@ RED = ""      # 失败标记颜色（红色）
 YELLOW = ""   # 警告标记颜色（黄色）
 CYAN = ""     # 信息标记颜色（青色）
 RESET = ""    # 重置颜色
+
+# 启用ANSI颜色代码
+GREEN = "\033[92m"    # 成功标记颜色（绿色）
+RED = "\033[91m"      # 失败标记颜色（红色）
+YELLOW = "\033[93m"   # 警告标记颜色（黄色）
+CYAN = "\033[96m"     # 信息标记颜色（青色）
+RESET = "\033[0m"     # 重置颜色
+
+# 调用示例
+print(f"{GREEN}操作成功完成！{RESET}")
+print(f"{RED}操作执行失败！{RESET}")
+print(f"{YELLOW}请注意：这是一条警告信息！{RESET}")
+print(f"{CYAN}提示：任务已进入等待状态。{RESET}")
 
 # =============================================================================
 # 输出格式化函数 Output Formatting Functions
@@ -281,11 +295,11 @@ def check_core_packages():
 
     # 定义需要检查的包及其要求
     packages = {
-        'pandas': {'required': True, 'min_version': '2.0.0'},       # 数据分析核心库
-        'numpy': {'required': True, 'min_version': '1.24.0'},       # 数值计算基础
-        'matplotlib': {'required': False, 'min_version': '3.7.0'},  # 图表绘制
-        'pydantic': {'required': False, 'min_version': '2.0.0'},    # 数据验证
-        'requests': {'required': True, 'min_version': '2.30.0'},    # HTTP 请求
+        'pandas': {'required': True, 'min_version': '2.0.0'},       # 数据分析核心库，用于处理时间序列数据、股票数据等
+        'numpy': {'required': True, 'min_version': '1.24.0'},       # 数值计算基础，用于数组操作、数学计算等
+        'matplotlib': {'required': False, 'min_version': '3.7.0'},  # 图表绘制，用于可视化分析结果
+        'pydantic': {'required': False, 'min_version': '2.0.0'},    # 数据验证，用于定义数据模型、验证输入数据等
+        'requests': {'required': True, 'min_version': '2.30.0'},    # HTTP 请求，用于与 QMT 交互，发送 RESTful API 请求，获取行情数据等
     }
 
     all_ok = True  # 标记是否所有必需包都已安装
@@ -417,11 +431,11 @@ def check_project_import():
     # 定义需要检查的模块和类
     # 格式：(模块路径, 类名)
     modules = [
-        ('core.strategy', 'BaseStrategy'),              # 策略基类
-        ('core.context', 'Context'),                    # 上下文对象
-        ('core.engine', 'BacktestEngine'),              # 回测引擎
-        ('core.live_runner', 'LiveRunner'),             # 实盘运行器
-        ('strategies.double_ma', 'DoubleMAStrategy'),   # 双均线策略
+        ('core.strategy', 'BaseStrategy'),              # 策略基类，所有策略都应继承自它，定义了策略的基本结构和方法，如初始化、处理数据等
+        ('core.context', 'Context'),                    # 上下文对象，用于管理全局状态和配置信息，提供对市场数据、账户信息等的访问接口，
+        ('core.engine', 'BacktestEngine'),              # 回测引擎，用于模拟市场环境，运行策略并记录交易结果
+        ('core.live_runner', 'LiveRunner'),             # 实盘运行器，用于将策略部署到实盘环境，处理实时数据和交易指令
+        ('strategies.double_ma', 'DoubleMAStrategy'),   # 双均线策略，示例策略，展示如何继承 BaseStrategy 并实现具体逻辑
     ]
 
     all_ok = True  # 标记是否所有模块都导入成功
@@ -461,15 +475,17 @@ def check_sys_path():
     检查内容：
         1. 显示 sys.path 的前 10 个路径（最重要的）
         2. 统计 site-packages 目录数量
-        3. 如果 site-packages 过多（>2），给出警告
+        3. 分析 site-packages 来源（用户级、conda环境、setuptools内部）
+        4. 如果存在潜在冲突，给出警告
     
     Returns:
         bool: 始终返回 True（仅用于信息展示）
         
     输出标记：
         [INFO] sys.path 顺序: ...
+        [INFO] 检测到的 site-packages 路径分析
         [OK]   site-packages 路径正常
-        [WARN] 检测到 X 个 site-packages 路径，可能存在版本混乱
+        [WARN] 检测到用户级 site-packages，可能与 conda 环境冲突
     """
     print_header("6. Python 路径检查")
 
@@ -482,18 +498,66 @@ def check_sys_path():
     if len(sys.path) > 10:
         print(f"      ... 还有 {len(sys.path) - 10} 个路径")
 
-    # 检查 site-packages 数量
+    # 检查 site-packages 数量和来源
     # site-packages 是第三方包的安装目录
     site_packages = [p for p in sys.path if 'site-packages' in p]
     
-    if len(site_packages) > 2:
-        # 过多的 site-packages 可能意味着：
-        # - 混用了多个 Python 环境
-        # - 同时安装了 conda 和 pip 的包
-        # - 可能导致版本冲突
-        print_warn(f"检测到 {len(site_packages)} 个 site-packages 路径，可能存在版本混乱")
+    if len(site_packages) > 0:
+        print()
+        print_info(f"检测到 {len(site_packages)} 个 site-packages 路径:")
+        
+        # 分析每个 site-packages 的来源
+        user_site = []      # 用户级安装（pip install --user）
+        conda_site = []     # conda 环境安装
+        setuptools_site = [] # setuptools 内部路径
+        other_site = []     # 其他路径
+        
+        for sp in site_packages:
+            if 'AppData\\Roaming\\Python' in sp or 'site-packages' in sp and 'Users' in sp:
+                user_site.append(sp)
+            elif 'setuptools' in sp or '_vendor' in sp:
+                setuptools_site.append(sp)
+            elif 'conda' in sp.lower() or 'miniconda' in sp.lower() or 'anaconda' in sp.lower():
+                conda_site.append(sp)
+            else:
+                other_site.append(sp)
+        
+        # 显示分类结果
+        if conda_site:
+            print(f"      - Conda 环境: {len(conda_site)} 个")
+            for sp in conda_site:
+                print(f"        {sp}")
+        
+        if user_site:
+            print(f"      - 用户级安装: {len(user_site)} 个")
+            for sp in user_site:
+                print(f"        {sp}")
+        
+        if setuptools_site:
+            print(f"      - Setuptools 内部: {len(setuptools_site)} 个 (可忽略)")
+            for sp in setuptools_site:
+                print(f"        {sp}")
+        
+        if other_site:
+            print(f"      - 其他: {len(other_site)} 个")
+            for sp in other_site:
+                print(f"        {sp}")
+        
+        print()
+        
+        # 判断是否存在潜在问题
+        # 问题1: 用户级 site-packages 可能与 conda 环境冲突
+        if user_site and conda_site:
+            print_warn("检测到用户级 site-packages，可能与 conda 环境产生包版本冲突")
+            print_info("建议: 在 conda 环境中避免使用 'pip install --user'")
+            print_info("      应使用 'pip install' 或 'conda install'")
+        # 问题2: 多个非 setuptools 的 site-packages（排除 setuptools 内部路径）
+        elif len(user_site) + len(conda_site) + len(other_site) > 2:
+            print_warn(f"检测到多个 site-packages 路径，可能存在版本混乱")
+        else:
+            print_ok("site-packages 路径正常")
     else:
-        print_ok("site-packages 路径正常")
+        print_ok("未检测到 site-packages（使用系统 Python）")
 
     return True
 
@@ -593,8 +657,39 @@ def main():
     """
     # 打印脚本标题
     print(f"\n{CYAN}Q_System 环境检查工具{RESET}")
-    print(f"运行时间: {platform.node()}")           # 主机名
-    print(f"操作系统: {platform.system()} {platform.release()}")  # 操作系统信息
+    print(f"主机名称: {platform.node()}")                                    # 主机名
+    print(f"运行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")      # 当前时间
+    
+    # 获取操作系统信息（Windows 11 需要特殊处理）
+    os_name = platform.system()
+    if os_name == 'Windows':
+        # 获取 Windows 版本信息
+        win_ver_tuple = platform.win32_ver()  # 返回 (release, version, csd, ptype)
+        build_number = win_ver_tuple[1]       # 完整版本号，如 10.0.26220
+        
+        # 判断是否为 Windows 11（构建号 >= 22000）
+        # 从 10.0.26220 中提取 26220
+        try:
+            if build_number:
+                # 分割版本号，取最后一部分作为构建号
+                parts = build_number.split('.')
+                if len(parts) >= 3:
+                    actual_build = int(parts[2])  # 26220
+                    if actual_build >= 22000:
+                        os_info = f"Windows 11 (Build {actual_build})"
+                    else:
+                        os_info = f"Windows 10 (Build {actual_build})"
+                else:
+                    os_info = f"Windows (Build {build_number})"
+            else:
+                os_info = f"Windows {platform.release()}"
+        except Exception as e:
+            # 如果解析失败，使用默认信息
+            os_info = f"Windows {platform.release()} ({build_number})"
+    else:
+        os_info = f"{os_name} {platform.release()}"
+    
+    print(f"操作系统: {os_info}")  # 操作系统及版本号
 
     # 创建结果字典，用于记录每项检查的结果
     results = {}
