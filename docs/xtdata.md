@@ -34,9 +34,9 @@ xtdata是xtquant库中提供行情相关数据的模块，本模块旨在提供�
     - K线添加前收价、停牌标记字段
 - 2022-09-30
   - 添加交易日历相关接口
-    - 获取节假日数据 `get_holidays`
-    - 获取交易日历 `get_trading_calendar`
-    - 获取交易时段 `get_trade_times`
+  - 获取节假日数据 `get_holidays`
+  - 获取交易日历 `get_trading_calendar`
+  - 获取交易时段 `get_trade_times`
 - 2023-01-04
   - 添加千档行情获取
 - 2023-01-31
@@ -60,8 +60,8 @@ xtdata是xtquant库中提供行情相关数据的模块，本模块旨在提供�
     - 增加 `ExchangeCode` `UniCode`
   - 添加获取可用周期列表的接口 `get_period_list`
 - 2023-10-11
-  -  `get_market_data_ex`支持获取ETF申赎清单数据
-  - 数据字典添加 现金替代标志 
+  - `get_market_data_ex`支持获取ETF申赎清单数据
+  - 数据字典添加 现金替代标志
 - 2023-11-09
   - `download_history_data`添加增量下载参数，支持指定起始时间的增量下载
 - 2023-11-22
@@ -110,7 +110,7 @@ xtdata提供和MiniQmt的交互接口，本质是和MiniQmt建立连接，由Min
 
 - 行情数据（K线数据、分笔数据，订阅和主动获取的接口）
   - 功能划分（接口前缀）
-    - subscribe_ / unsubscribe_ 订阅/反订阅
+    - subscribe_/ unsubscribe_ 订阅/反订阅
     - get_ 获取数据
     - download_ 下载数据
   - 常见用法
@@ -137,7 +137,7 @@ xtdata提供和MiniQmt的交互接口，本质是和MiniQmt建立连接，由Min
     - `1mon` - 月线
     - `1q` - 季度线
     - `1hy` - 半年线
-    - `1y` - 年线 
+    - `1y` - 年线
   - level2数据
     - `l2quote` - level2实时行情快照
     - `l2order` - level2逐笔委托
@@ -194,8 +194,6 @@ xtdata提供和MiniQmt的交互接口，本质是和MiniQmt建立连接，由Min
 - 单股订阅行情是仅返回单股数据的接口，建议单股订阅数量不超过50。如果订阅数较多，建议直接使用全推数据
 - 板块分类信息等静态信息更新频率低，无需频繁下载，按周或按日定期下载更新即可
 
-
-
 ## 接口说明
 
 ### 行情接口
@@ -231,7 +229,7 @@ subscribe_quote(stock_code, period='1d', start_time='', end_time='', count=0, ca
     ```python
     def on_data(datas):
         for stock_code in datas:
-            	print(stock_code, datas[stock_code])
+                print(stock_code, datas[stock_code])
     ```
 
 - 返回
@@ -275,7 +273,7 @@ subscribe_quote2(stock_code, period='1d', start_time='', end_time='', count=0, d
     ```python
     def on_data(datas):
         for stock_code in datas:
-            	print(stock_code, datas[stock_code])
+                print(stock_code, datas[stock_code])
     ```
 
 - 返回
@@ -312,7 +310,7 @@ subscribe_whole_quote(code_list, callback=None)
     ```python
     def on_data(datas):
         for stock_code in datas:
-            	print(stock_code, datas[stock_code])
+                print(stock_code, datas[stock_code])
     ```
 
 - 返回
@@ -367,7 +365,7 @@ get_market_data(field_list=[], stock_list=[], period='1d', start_time='', end_ti
   - period - string 周期
   - start_time - string 起始时间
   - end_time - string 结束时间
-  - count - int 数据个数 
+  - count - int 数据个数
   - 默认参数，大于等于0时，若指定了start_time，end_time，此时以end_time为基准向前取count条；若start_time，end_time缺省，默认取本地数据最新的count条数据；若start_time，end_time，count都缺省时，默认取本地全部数据
   - dividend_type - string 除权方式
   - fill_data - bool 是否向后填充空缺数据
@@ -558,8 +556,8 @@ download_history_data2(stock_list, period, start_time='', end_time='', callback=
 
     - ```python
       def on_progress(data):
-      	print(data)
-      	# {'finished': 1, 'total': 50, 'stockcode': '000001.SZ', 'message': ''}
+          print(data)
+          # {'finished': 1, 'total': 50, 'stockcode': '000001.SZ', 'message': ''}
       ```
 
 - 返回
@@ -610,29 +608,27 @@ get_trading_time(stockcode)
 ```
 
 - 释义
-  
+
   - 返回指定代码的交易时段
 - 参数
-  
+
   - stockcode - str 合约代码（例如`600000.SH`）
 - 返回
-  
+
   - list，返回交易时段列表，第一位是开始时间，第二位结束时间，第三位交易类型   （2 - 开盘竞价， 3 - 连续交易， 8 - 收盘竞价， 9 - 盘后定价）。时间单位为“秒”
 - 备注
-  
+
   - 股票代码错误时返回空列表
-  
+
   - 跨天时以当前天0点为起始，前一天为负，下一天多86400
-  
+
   - ```
     #需要转换为datetime时，可以用以下方法转换
     import datetime as dt
     dt.datetime.combine(dt.date.today(), dt.time()) + dt.timedelta(seconds = 34200)
     ```
-  
-    
 
-#### 可转债基础信息的下载 
+#### 可转债基础信息的下载
 
 ```python
 download_cb_data()
@@ -662,7 +658,6 @@ get_cb_info(stockcode)
 - 备注
   - 需要先下载可转债数据
 
-
 #### 获取新股申购信息
 
 ```python
@@ -670,7 +665,7 @@ get_ipo_info(start_time, end_time)
 ```
 
 - 释义
-  
+
   - 返回所选时间范围的新股申购信息
 - 参数
   - start_time: 开始日期（如：'20230327'）
@@ -678,7 +673,7 @@ get_ipo_info(start_time, end_time)
   - start_time 和 end_time 为空则返回全部数据
 - 返回
   - list[dict]，新股申购信息
-  
+
   - ```python
     securityCode - string 证券代码
     codeName - string 代码简称
@@ -692,7 +687,7 @@ get_ipo_info(start_time, end_time)
     industryPe - float 行业市盈率
     afterPE - float 发行后市盈率
     ```
-  
+
 #### 获取可用周期列表
 
 ```python
@@ -791,14 +786,14 @@ get_financial_data(stock_list, table_list=[], start_time='', end_time='', report
 ```
 
 - 释义
-  
+
   - 获取财务数据
 - 参数
-  
+
   - stock_list - list 合约代码列表
-  
+
   - table_list - list 财务数据表名称列表
-  
+
     - ```python
       'Balance'          #资产负债表
       'Income'           #利润表
@@ -809,26 +804,26 @@ get_financial_data(stock_list, table_list=[], start_time='', end_time='', report
       'Top10flowholder'  #十大流通股东
       'Pershareindex'    #每股指标
       ```
-  
+
   - start_time - string 起始时间
-  
+
   - end_time - string 结束时间
-  
+
   - report_type - string 报表筛选方式
-  
+
     - ```python
-      'report_time' 	#截止日期
+      'report_time'     #截止日期
       'announce_time' #披露日期
       ```
 - 返回
-  
+
   - dict 数据集 { stock1 : datas1, stock2 : data2, ... }
   - stock1, stock2, ... ：合约代码
   - datas1, datas2, ... ：dict 数据集 { table1 : table_data1, table2 : table_data2, ... }
     - table1, table2, ... ：财务数据表名
     - table_data1, table_data2, ... ：pd.DataFrame 数据集，数据字段详见附录 - 财务数据字段列表
 - 备注
-  
+
   - 无
 
 #### 下载财务数据
@@ -878,15 +873,15 @@ download_financial_data2(stock_list, table_list=[], start_time='', end_time='', 
 
     - ```python
       def on_progress(data):
-      	print(data)
-      	# {'finished': 1, 'total': 50, 'stockcode': '000001.SZ', 'message': ''}
+          print(data)
+          # {'finished': 1, 'total': 50, 'stockcode': '000001.SZ', 'message': ''}
       ```
 
 - 返回
-  
+
   - 无
 - 备注
-  
+
   - 同步执行，补充数据完成后返回
 
 ### 基础行情信息
@@ -911,7 +906,7 @@ get_instrument_detail(stock_code, iscomplete)
   - dict 数据字典，{ field1 : value1, field2 : value2, ... }，找不到指定合约时返回`None`
 
   - iscomplete为False时，返回以下字段
-    
+
     ```python
     ExchangeID - string 合约市场代码
     InstrumentID - string 合约代码
@@ -958,9 +953,9 @@ get_instrument_detail(stock_code, iscomplete)
     IsTrading - bool 合约是否可交易
     IsRecent - bool 是否是近月合约
     ```
-    
+
   - 详细合约信息字段见`附录-合约信息字段列表`
-  
+
 - 备注
 
   - 可用于检查合约代码是否正确
@@ -973,24 +968,23 @@ get_instrument_type(stock_code)
 ```
 
 - 释义
-  
+
   - 获取合约类型
 - 参数
-  
+
   - stock_code - string 合约代码
 - 返回
-  
+
   - dict 数据字典，{ type1 : value1, type2 : value2, ... }，找不到指定合约时返回`None`
-  
+
     - type1, type2, ... ：string 合约类型
     - value1, value2, ... ：bool 是否为该类合约
-  
+
   - ```python
-    'index'		#指数
-    'stock'		#股票
-    'fund'		#基金
-    'etf'		#ETF
-    ```
+    'index'        #指数
+    'stock'        #股票
+    'fund'        #基金
+    'etf'        #ETF
 - 备注
 
   - 无
@@ -1188,8 +1182,6 @@ download_index_weight()
 - 备注
   - 同步执行，下载完成后返回
 
-
-
 ## 附录
 
 ### 行情数据字段列表
@@ -1213,7 +1205,7 @@ download_index_weight()
 'bidPrice'              #委买价
 'askVol'                #委卖量
 'bidVol'                #委买量
-'transactionNum'		#成交笔数
+'transactionNum'        #成交笔数
 ```
 
 #### 1m / 5m / 1d - K线数据
@@ -1235,13 +1227,13 @@ download_index_weight()
 #### 除权数据
 
 ```python
-'interest'        		#每股股利（税前，元）
-'stockBonus'      		#每股红股（股）
-'stockGift'       		#每股转增股本（股）
-'allotNum'        		#每股配股数（股）
-'allotPrice'      		#配股价格（元）
-'gugai'           		#是否股改, 对于股改，在算复权系数时，系统有特殊算法
-'dr'              		#除权系数
+'interest'                #每股股利（税前，元）
+'stockBonus'              #每股红股（股）
+'stockGift'               #每股转增股本（股）
+'allotNum'                #每股配股数（股）
+'allotPrice'              #配股价格（元）
+'gugai'                   #是否股改, 对于股改，在算复权系数时，系统有特殊算法
+'dr'                      #除权系数
 ```
 
 #### l2quote - level2实时行情快照
@@ -1394,7 +1386,7 @@ download_index_weight()
 'dLowerLimitMarketValue_SZ'         #深圳市场跌停成分股市值
 'dSidecarMarketValue_SZ'            #深圳市场停牌成分股市值
 'dIndexDeviation'                   #指数偏差
-    
+
 五档指标:
 'purchaseIOPVs'                     #申购动态IOPV
 'redemptionIOPVs'                   #赎回动态IOPV
@@ -1568,13 +1560,11 @@ download_index_weight()
 'offVolume'                  #多档委卖量(向量)，单位是手
 ```
 
-
-
 ### 数据字典
 
 #### 证券状态
 
-```
+```plaintext
 0,10 - 默认为未知
 11 - 开盘前S
 12 - 集合竞价时段C
@@ -1596,7 +1586,7 @@ download_index_weight()
 - level2逐笔委托 - `entrustType`  委托类型
 - level2逐笔成交 - `tradeType` 成交类型
 
-```
+```plaintext
 0 - 未知
 1 - 正常交易业务
 2 - 即时成交剩余撤销
@@ -1612,7 +1602,7 @@ download_index_weight()
 - level2逐笔委托 - `entrustDirection` 委托方向
   - 注：上交所的撤单信息在逐笔委托的委托方向，区分撤买撤卖
 
-```
+```plaintext
 1 - 买入
 2 - 卖出
 3 - 撤买（上交所）
@@ -1624,7 +1614,7 @@ download_index_weight()
 - level2逐笔成交 - `tradeFlag` 成交标志
   - 注：深交所的在逐笔成交的成交标志，只有撤单，没有方向
 
-```
+```plaintext
 0 - 未知
 1 - 外盘
 2 - 内盘
@@ -1633,9 +1623,9 @@ download_index_weight()
 
 #### 现金替代标志
 
-- ETF申赎清单成份股现金替代标志 
+- ETF申赎清单成份股现金替代标志
 
-```
+```text
 0 - 禁止现金替代（必须有股票）
 1 - 允许现金替代（先用股票，股票不足的话用现金替代
 2 - 必须现金替代
@@ -1646,7 +1636,6 @@ download_index_weight()
 7 - 港市退补现金替代（仅适用于跨沪深ETF产品）
 8 - 港市必须现金替代（仅适用于跨沪深港ETF产品）
 ```
-
 
 ### 财务数据字段列表
 
@@ -1841,7 +1830,7 @@ download_index_weight()
 'cash_paid_for_investments'                 #投资所支付的现金
 'net_increase_in_pledged_loans'             #质押贷款净增加额
 'cash_paid_by_subsidiaries'                 #取得子公司及其他营业单位支付的现金净额
-'increase_in_cash_paid'                     #增加质押和定期存款所支付的现金 
+'increase_in_cash_paid'                     #增加质押和定期存款所支付的现金
 'cass_received_sub_abs'                     #其中子公司吸收现金
 'cass_received_sub_investments'             #其中:子公司支付给少数股东的股利、利润
 'minority_shareholder_profit_loss'          #少数股东损益
@@ -1994,96 +1983,96 @@ download_index_weight()
 ### 合约信息字段列表
 
 ```python
-'ExchangeID' 				#合约市场代码
-'InstrumentID' 				#合约代码
-'InstrumentName' 			#合约名称
-'Abbreviation' 				#合约名称的拼音简写
-'ProductID' 				#合约的品种ID（期货）
-'ProductName' 				#合约的品种名称（期货）
-'UnderlyingCode' 			#标的合约
-'ExtendName' 				#扩位名称
-'ExchangeCode' 				#交易所代码
-'RzrkCode' 					#rzrk代码
-'UniCode' 					#统一规则代码
-'CreateDate' 				#上市日期（期货）
-'OpenDate' 					#IPO日期（股票）
-'ExpireDate' 				#退市日或者到期日
-'PreClose' 					#前收盘价格
-'SettlementPrice' 			#前结算价格
-'UpStopPrice' 				#当日涨停价
-'DownStopPrice' 			#当日跌停价
-'FloatVolume' 				#流通股本
-'TotalVolume' 				#总股本
-'AccumulatedInterest' 		#自上市付息日起的累积未付利息额（债券）
-'LongMarginRatio' 			#多头保证金率
-'ShortMarginRatio' 			#空头保证金率
-'PriceTick' 				#最小变价单位
-'VolumeMultiple' 			#合约乘数（对期货以外的品种，默认是1）
-'MainContract' 				#主力合约标记，1、2、3分别表示第一主力合约，第二主力合约，第三主力合约
-'MaxMarketOrderVolume' 		#市价单最大下单量
-'MinMarketOrderVolume' 		#市价单最小下单量
-'MaxLimitOrderVolume' 		#限价单最大下单量
-'MinLimitOrderVolume' 		#限价单最小下单量
-'MaxMarginSideAlgorithm' 	#上期所大单边的处理算法
-'DayCountFromIPO' 			#自IPO起经历的交易日总数
-'LastVolume' 				#昨日持仓量
-'InstrumentStatus' 			#合约停牌状态
-'IsTrading' 				#合约是否可交易
-'IsRecent' 					#是否是近月合约
-'IsContinuous' 				#是否是连续合约
-'bNotProfitable' 			#是否非盈利状态
-'bDualClass' 				#是否同股不同权
-'ContinueType' 				#连续合约类型
-'secuCategory' 				#证券分类
-'secuAttri' 				#证券属性
-'MaxMarketSellOrderVolume' 	#市价卖单最大单笔下单量
-'MinMarketSellOrderVolume' 	#市价卖单最小单笔下单量
-'MaxLimitSellOrderVolume' 	#限价卖单最大单笔下单量
-'MinLimitSellOrderVolume' 	#限价卖单最小单笔下单量
-'MaxFixedBuyOrderVol' 		#盘后定价委托数量的上限（买）
-'MinFixedBuyOrderVol' 		#盘后定价委托数量的下限（买）
-'MaxFixedSellOrderVol' 		#盘后定价委托数量的上限（卖）
-'MinFixedSellOrderVol' 		#盘后定价委托数量的下限（卖）
-'HSGTFlag' 					#标识港股是否为沪港通或深港通标的证券。沪港通:0-非标的，1-标的，2-历史标的；深港通:0-非标的，3-标的，4-历史标的，5-是沪港通也是深港通
-'BondParValue' 				#债券面值
-'QualifiedType' 			#投资者适当性管理分类
-'PriceTickType' 			#价差类别（港股用），1-股票，3-债券，4-期权，5-交易所买卖基金
-'tradingStatus' 			#交易状态
-'OptUnit' 					#期权合约单位
-'MarginUnit' 				#期权单位保证金
-'OptUndlCode' 				#期权标的证券代码或可转债正股标的证券代码
-'OptUndlMarket' 			#期权标的证券市场或可转债正股标的证券市场
-'OptLotSize' 				#期权整手数
-'OptExercisePrice' 			#期权行权价或可转债转股价
-'NeeqExeType' 				#全国股转转让类型，1-协议转让方式，2-做市转让方式，3-集合竞价+连续竞价转让方式（当前全国股转并未实现），4-集合竞价转让
-'OptExchFixedMargin' 		#交易所期权合约保证金不变部分
-'OptExchMiniMargin' 		#交易所期权合约最小保证金
-'Ccy' 						#币种
-'IbSecType' 				#IB安全类型，期货或股票
-'OptUndlRiskFreeRate' 		#期权标的无风险利率
-'OptUndlHistoryRate' 		#期权标的历史波动率
-'EndDelivDate' 				#期权行权终止日
-'RegisteredCapital' 		#注册资本（单位:百万）
-'MaxOrderPriceRange' 		#最大有效申报范围
-'MinOrderPriceRange' 		#最小有效申报范围
-'VoteRightRatio' 			#同股同权比例
+'ExchangeID'                 #合约市场代码
+'InstrumentID'                 #合约代码
+'InstrumentName'             #合约名称
+'Abbreviation'                 #合约名称的拼音简写
+'ProductID'                 #合约的品种ID（期货）
+'ProductName'                 #合约的品种名称（期货）
+'UnderlyingCode'             #标的合约
+'ExtendName'                 #扩位名称
+'ExchangeCode'                 #交易所代码
+'RzrkCode'                     #rzrk代码
+'UniCode'                     #统一规则代码
+'CreateDate'                 #上市日期（期货）
+'OpenDate'                     #IPO日期（股票）
+'ExpireDate'                 #退市日或者到期日
+'PreClose'                     #前收盘价格
+'SettlementPrice'             #前结算价格
+'UpStopPrice'                 #当日涨停价
+'DownStopPrice'             #当日跌停价
+'FloatVolume'                 #流通股本
+'TotalVolume'                 #总股本
+'AccumulatedInterest'         #自上市付息日起的累积未付利息额（债券）
+'LongMarginRatio'             #多头保证金率
+'ShortMarginRatio'             #空头保证金率
+'PriceTick'                 #最小变价单位
+'VolumeMultiple'             #合约乘数（对期货以外的品种，默认是1）
+'MainContract'                 #主力合约标记，1、2、3分别表示第一主力合约，第二主力合约，第三主力合约
+'MaxMarketOrderVolume'         #市价单最大下单量
+'MinMarketOrderVolume'         #市价单最小下单量
+'MaxLimitOrderVolume'         #限价单最大下单量
+'MinLimitOrderVolume'         #限价单最小下单量
+'MaxMarginSideAlgorithm'     #上期所大单边的处理算法
+'DayCountFromIPO'             #自IPO起经历的交易日总数
+'LastVolume'                 #昨日持仓量
+'InstrumentStatus'             #合约停牌状态
+'IsTrading'                 #合约是否可交易
+'IsRecent'                     #是否是近月合约
+'IsContinuous'                 #是否是连续合约
+'bNotProfitable'             #是否非盈利状态
+'bDualClass'                 #是否同股不同权
+'ContinueType'                 #连续合约类型
+'secuCategory'                 #证券分类
+'secuAttri'                 #证券属性
+'MaxMarketSellOrderVolume'     #市价卖单最大单笔下单量
+'MinMarketSellOrderVolume'     #市价卖单最小单笔下单量
+'MaxLimitSellOrderVolume'     #限价卖单最大单笔下单量
+'MinLimitSellOrderVolume'     #限价卖单最小单笔下单量
+'MaxFixedBuyOrderVol'         #盘后定价委托数量的上限（买）
+'MinFixedBuyOrderVol'         #盘后定价委托数量的下限（买）
+'MaxFixedSellOrderVol'         #盘后定价委托数量的上限（卖）
+'MinFixedSellOrderVol'         #盘后定价委托数量的下限（卖）
+'HSGTFlag'                     #标识港股是否为沪港通或深港通标的证券。沪港通:0-非标的，1-标的，2-历史标的；深港通:0-非标的，3-标的，4-历史标的，5-是沪港通也是深港通
+'BondParValue'                 #债券面值
+'QualifiedType'             #投资者适当性管理分类
+'PriceTickType'             #价差类别（港股用），1-股票，3-债券，4-期权，5-交易所买卖基金
+'tradingStatus'             #交易状态
+'OptUnit'                     #期权合约单位
+'MarginUnit'                 #期权单位保证金
+'OptUndlCode'                 #期权标的证券代码或可转债正股标的证券代码
+'OptUndlMarket'             #期权标的证券市场或可转债正股标的证券市场
+'OptLotSize'                 #期权整手数
+'OptExercisePrice'             #期权行权价或可转债转股价
+'NeeqExeType'                 #全国股转转让类型，1-协议转让方式，2-做市转让方式，3-集合竞价+连续竞价转让方式（当前全国股转并未实现），4-集合竞价转让
+'OptExchFixedMargin'         #交易所期权合约保证金不变部分
+'OptExchMiniMargin'         #交易所期权合约最小保证金
+'Ccy'                         #币种
+'IbSecType'                 #IB安全类型，期货或股票
+'OptUndlRiskFreeRate'         #期权标的无风险利率
+'OptUndlHistoryRate'         #期权标的历史波动率
+'EndDelivDate'                 #期权行权终止日
+'RegisteredCapital'         #注册资本（单位:百万）
+'MaxOrderPriceRange'         #最大有效申报范围
+'MinOrderPriceRange'         #最小有效申报范围
+'VoteRightRatio'             #同股同权比例
 'm_nMinRepurchaseDaysLimit' #最小回购天数
 'm_nMaxRepurchaseDaysLimit' #最大回购天数
-'DeliveryYear' 				#交割年份
-'DeliveryMonth' 			#交割月
-'ContractType' 				#标识期权，1-过期，2-当月，3-下月，4-下季，5-隔季，6-隔下季
-'ProductTradeQuota' 		#期货品种交易配额
-'ContractTradeQuota' 		#期货合约交易配额
-'ProductOpenInterestQuota' 	#期货品种持仓配额
+'DeliveryYear'                 #交割年份
+'DeliveryMonth'             #交割月
+'ContractType'                 #标识期权，1-过期，2-当月，3-下月，4-下季，5-隔季，6-隔下季
+'ProductTradeQuota'         #期货品种交易配额
+'ContractTradeQuota'         #期货合约交易配额
+'ProductOpenInterestQuota'     #期货品种持仓配额
 'ContractOpenInterestQuota' #期货合约持仓配额
-'ChargeType' 				#期货和期权手续费方式，0-未知，1-按元/手，2-按费率
-'ChargeOpen' 				#开仓手续费率，-1表示没有
-'ChargeClose' 				#平仓手续费率，-1表示没有
-'ChargeClose'				#平仓手续费率，-1表示没有
-'ChargeTodayOpen'			#开今仓（日内开仓）手续费率，-1表示没有
-'ChargeTodayClose'			#平今仓（日内平仓）手续费率，-1表示没有
-'OptionType'				#期权类型，-1为非期权，0为期权认购，1为期权认沽
-'OpenInterestMultiple'		#交割月持仓倍数
+'ChargeType'                 #期货和期权手续费方式，0-未知，1-按元/手，2-按费率
+'ChargeOpen'                 #开仓手续费率，-1表示没有
+'ChargeClose'                 #平仓手续费率，-1表示没有
+'ChargeClose'                #平仓手续费率，-1表示没有
+'ChargeTodayOpen'            #开今仓（日内开仓）手续费率，-1表示没有
+'ChargeTodayClose'            #平今仓（日内平仓）手续费率，-1表示没有
+'OptionType'                #期权类型，-1为非期权，0为期权认购，1为期权认沽
+'OpenInterestMultiple'        #交割月持仓倍数
 ```
 
 ### 代码示例
@@ -2101,7 +2090,3 @@ def conv_time(ct):
     data_secs = (ct - int(ct)) * 1000
     time_stamp = '%s.%03d' % (data_head, data_secs)
     return time_stamp
-```
-
-
-

@@ -18,7 +18,7 @@
 
 **User Story:** 作为量化学习者，我希望拥有一个纯净且正确配置的Python 3.8环境，以便能够运行MiniQMT和XtQuant相关代码。
 
-#### Acceptance Criteria for Pandas Data Cleaning
+#### pandas数据清洗的验收标准（Acceptance Criteria for Pandas Data Cleaning）
 
 1. THE Conda_Environment SHALL 使用Python 3.8.x版本
 2. WHEN 执行 `python scripts/check_env.py` 时，THE Check_Script SHALL 显示所有检查项为PASS状态
@@ -30,7 +30,7 @@
 
 **User Story:** 作为量化学习者，我希望掌握量化开发常用的Python语法特性，以便能够编写高效的数据处理代码。
 
-#### Acceptance Criteria for Python Core Syntax Mastery
+#### Python核心语法掌握的验收标准（Acceptance Criteria for Python Core Syntax Mastery）
 
 1. THE Learner SHALL 能够使用列表推导式处理股票代码列表
 2. THE Learner SHALL 能够使用dict.get()安全获取字典值并设置默认值

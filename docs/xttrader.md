@@ -1,12 +1,19 @@
 # 入门篇
+
 ## 迅投XtQuant FAQ
+
 ### XtQuant能提供哪些服务
+
 XtQuant是基于迅投MiniQMT衍生出来的一套完善的Python策略运行框架，对外以Python库的形式提供策略交易所需要的行情和交易相关的API接口。
+
 ### XtQuant运行依赖环境
+
+
 XtQuant目前提供的库包括Python3.6、3.7、3.8版本，不同版本的python导入时会自动切换。
 在运行使用XtQuant的程序前需要先启动MiniQMT客户端。
 
-## 版本信息
+## 版本
+
 - 2020-09-01
   - 初稿
 - 2020-10-14
@@ -77,26 +84,26 @@ XtQuant目前提供的库包括Python3.6、3.7、3.8版本，不同版本的pyth
     - `xtconstant.MARKET_CONVERT_1` - 市价最优一档即成剩转[中金所]
     - `xtconstant.MARKET_CONVERT_5` - 市价最优五档即成剩转[中金所]
 - 2023-10-20
-    - 委托结构`XtOrder`，成交结构`XtTrade`，持仓结构`XtPosition` 新增多空字段
-        - `direction` - 多空，股票不需要
-        - 委托结构`XtOrder`，成交结构`XtTrade`新增交易操作字段
-        - `offset_flag` - 交易操作，用此字段区分股票买卖，期货开、平仓，期权买卖等
+  - 委托结构`XtOrder`，成交结构`XtTrade`，持仓结构`XtPosition` 新增多空字段
+    - `direction` - 多空，股票不需要
+    - 委托结构`XtOrder`，成交结构`XtTrade`新增交易操作字段
+    - `offset_flag` - 交易操作，用此字段区分股票买卖，期货开、平仓，期权买卖等
 - 2023-11-03
   - 添加券源行情查询接口 `smt_query_quoter`
   - 添加库存券约券申请接口 `smt_negotiate_order`
   - 添加约券合约查询接口 `smt_query_compact`
 - 2024-01-02
-    - 委托类型增加ETF申赎
-- 2024-02-29
-    - 添加期货持仓统计查询接口`query_position_statistics`
+  - 委托类型增加ETF申赎
+- 2024-02-2
+  - 添加期货持仓统计查询接口`query_position_statistics`
 - 2024-05-24
-    - 添加通用数据导出接口export_data
-    - 添加通用数据查询接口query_data
+  - 添加通用数据导出接口export_data
+  - 添加通用数据查询接口query_data
 - 2024-06-27
-    - 添加外部成交导入接口sync_transaction_from_external
+  - 添加外部成交导入接口sync_transaction_from_external
 - 2024-08-27
-    - 成交结构`XtTrade`新增手续费字段
-        - `commission` - 手续费
+  - 成交结构`XtTrade`新增手续费字段
+      - `commission` - 手续费
 - 2024-11-28
     - 资产结构`XtAsset`新增可取资金字段
         - `fetch_balance` - 可取资金
@@ -524,8 +531,9 @@ instrument_name | str | 证券名称
 secu_account | str | 股东代码 
 
 ### 成交XtTrade
-属性|类型|注释
--|-|-
+
+属性 | 类型 | 注释
+- | - | - 
 account_type| int | 账号类型，参见数据字典 
 account_id | str | 资金账号
 stock_code | str | 证券代码
@@ -537,7 +545,7 @@ traded_volume | int | 成交数量
 traded_amount | float | 成交金额
 order_id | int | 订单编号
 order_sysid | str | 柜台合同编号
-strategy_name | str | 策略名称
+strategy_name | str | 策略
 order_remark | str | 委托备注
 direction | int | 多空方向，股票不需要；参见数据字典 
 offset_flag | int | 交易操作，用此字段区分股票买卖，期货开、平仓，期权买卖等；参见数据字 
@@ -547,7 +555,9 @@ secu_account | str | 股东代码
 
 ### 持仓XtPosition
 属性|类型|注释
--|-|-
+
+- | - | 
+-
 account_type| int | 账号类型，参见数据字典 
 account_id | str | 资金账号
 stock_code | str | 证券代码
