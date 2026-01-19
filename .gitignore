@@ -37,3 +37,11 @@ data/*.h5
 # 测试覆盖率
 htmlcov/
 .coverage
+.pytest_cache/
+
+# Week 2 特定文件
+data/cache/
+data/csv_exports/
+*.h5
+*.hdf5
+.hypothesis/
