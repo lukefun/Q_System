@@ -1,8 +1,47 @@
-# Q_System
+# Q_System - 量化交易全栈培训系统
 
 基于 XtQuant（国金证券 QMT）的量化交易回测与实盘框架。采用策略-引擎分离架构，支持自定义策略的回测验证与实盘交易。
 
+本项目是120天量化交易培训计划的实践平台，涵盖从数据工程到策略开发的完整技术栈。
+
+## 学习目标
+
+通过本项目，你将掌握：
+
+1. **金融数据工程** (Week 2)
+   - XtData API集成与市场数据获取
+   - 价格复权机制（前复权/后复权）
+   - 基本面数据ETL与时间点正确性
+   - 行业分类管理与板块分析
+   - 数据持久化与增量更新
+   - 金融数据可视化
+   - 未来函数防范与回测真实性
+
+2. **量化策略开发** (Week 3+)
+   - 策略-引擎分离架构
+   - 回测与实盘统一接口
+   - 风险控制与资金管理
+   - 策略性能评估
+
+3. **生产级系统设计**
+   - 模块化架构设计
+   - 错误处理与日志管理
+   - 数据质量检查
+   - 性能优化与扩展性
+
 ## 功能特性
+
+### 数据工程模块 (Week 2)
+
+- **XtData API集成**: 封装XtData接口，支持历史数据和实时数据获取
+- **价格复权处理**: 实现前复权和后复权算法，确保回测准确性
+- **基本面数据ETL**: 处理财务指标（PE、PB、ROE），严格时间点正确性
+- **行业分类管理**: 支持申万行业分类查询和历史变更追踪
+- **数据持久化**: HDF5高效存储，支持增量更新和CSV导出
+- **数据可视化**: K线图、成交量、技术指标可视化
+- **数据质量检查**: 异常值检测、缺口识别、完整性验证
+
+### 交易系统模块
 
 - **策略-引擎分离**: 策略逻辑与执行引擎解耦，便于策略复用与测试
 - **双模式运行**: 支持回测模式 (`BacktestEngine`) 和实盘模式 (`LiveRunner`)
@@ -15,26 +54,69 @@
 Q_System/
 ├── main.py              # 回测启动脚本
 ├── run_live.py          # 实盘启动脚本
+├── config.py            # 配置文件（API密钥、存储路径）
 ├── check.bat            # 环境快速检查 (双击运行)
 ├── start_isolated.bat   # 隔离模式启动器 (推荐)
 ├── requirements.txt     # 生产依赖
 ├── requirements-dev.txt # 开发依赖
 ├── environment.yml      # Conda 环境配置
-├── core/
+│
+├── src/                 # 数据工程模块 (Week 2)
+│   ├── xtdata_client.py       # XtData API客户端封装
+│   ├── data_retriever.py      # 数据获取器
+│   ├── price_adjuster.py      # 价格复权处理器
+│   ├── fundamental_handler.py # 基本面数据处理器
+│   ├── industry_mapper.py     # 行业分类映射器
+│   ├── data_manager.py        # 数据持久化管理器
+│   ├── visualizer.py          # 金融数据可视化器
+│   ├── data_alignment.py      # 数据对齐工具
+│   └── full_market_downloader.py  # 全市场数据下载
+│
+├── core/                # 交易引擎模块
 │   ├── engine.py        # 回测引擎
 │   ├── live_runner.py   # 实盘引擎
 │   ├── strategy.py      # 策略基类
 │   └── context.py       # 上下文对象 (核心交互接口)
-├── strategies/
+│
+├── strategies/          # 策略实现
 │   └── double_ma.py     # 双均线策略示例
-├── scripts/
-│   ├── check_env.py     # 环境验证脚本
-│   ├── setup_env.bat    # 一键环境配置
+│
+├── examples/            # 示例脚本 (Week 2 学习材料)
+│   ├── 01_basic_data_retrieval.py    # 数据获取示例
+│   ├── 02_price_adjustment.py        # 价格复权示例
+│   ├── 03_fundamental_data.py        # 基本面数据示例
+│   ├── 04_industry_classification.py # 行业分类示例
+│   ├── 05_data_persistence.py        # 数据持久化示例
+│   ├── 06_visualization.py           # 可视化示例
+│   ├── 07_incremental_update.py      # 增量更新示例
+│   ├── 09_build_local_database.py    # 构建本地数据库
+│   └── README.md                      # 示例说明文档
+│
+├── exercises/           # 练习题
+│   ├── week1/          # 第一周：Python基础
+│   └── week2/          # 第二周：数据工程 (待创建)
+│
+├── tests/              # 测试套件
+│   ├── unit/           # 单元测试
+│   ├── property/       # 基于属性的测试
+│   └── integration/    # 集成测试
+│
+├── data/               # 本地数据存储
+│   ├── market_data.h5  # HDF5数据库
+│   └── csv_exports/    # CSV导出文件
+│
+├── logs/               # 日志文件
+│
+├── scripts/            # 工具脚本
+│   ├── check_env.py    # 环境验证脚本
+│   ├── setup_env.bat   # 一键环境配置
 │   └── fix_env_isolation.bat  # 环境隔离修复
-├── data/                # 本地数据存储
-└── docs/
-    ├── ENVIRONMENT.md   # 环境管理详细文档
-    └── SETUP_GUIDE.md   # 新机器配置指南
+│
+└── docs/               # 文档
+    ├── ENVIRONMENT.md  # 环境管理详细文档
+    ├── SETUP_GUIDE.md  # 新机器配置指南
+    ├── xtdata.md       # XtData API文档
+    └── plan.md         # 120天学习计划
 ```
 
 ## 环境配置
@@ -231,6 +313,105 @@ python scripts/check_env.py
 
 ## 快速开始
 
+### Week 2: 金融数据工程快速入门
+
+#### 1. 配置XtData API
+
+编辑 `config.py` 文件，配置你的XtData账户信息：
+
+```python
+# XtData API配置
+XTDATA_ACCOUNT_ID = '你的账户ID'
+XTDATA_ACCOUNT_KEY = '你的账户密钥'
+
+# 数据存储路径
+DATA_STORAGE_PATH = './data'
+```
+
+#### 2. 运行示例脚本
+
+```bash
+# 激活环境
+conda activate quants
+
+# 示例1: 获取市场数据
+python examples/01_basic_data_retrieval.py
+
+# 示例2: 价格复权处理
+python examples/02_price_adjustment.py
+
+# 示例3: 基本面数据分析
+python examples/03_fundamental_data.py
+
+# 示例4: 行业分类查询
+python examples/04_industry_classification.py
+
+# 示例5: 数据持久化
+python examples/05_data_persistence.py
+
+# 示例6: K线图可视化
+python examples/06_visualization.py
+
+# 示例7: 增量更新
+python examples/07_incremental_update.py
+```
+
+#### 3. 构建本地数据库
+
+```bash
+# 下载全市场日线数据（需要较长时间）
+python examples/09_build_local_database.py
+```
+
+#### 4. 数据工程API使用示例
+
+```python
+from src.xtdata_client import XtDataClient
+from src.data_retriever import DataRetriever
+from src.price_adjuster import PriceAdjuster
+from src.data_manager import DataManager
+from config import XTDATA_ACCOUNT_ID, XTDATA_ACCOUNT_KEY, DATA_STORAGE_PATH
+
+# 1. 初始化客户端
+client = XtDataClient(XTDATA_ACCOUNT_ID, XTDATA_ACCOUNT_KEY)
+client.connect()
+
+# 2. 获取历史数据
+retriever = DataRetriever(client)
+data = retriever.download_history_data(
+    stock_codes=['000001.SZ', '600000.SH'],
+    start_date='20240101',
+    end_date='20241231',
+    period='1d'
+)
+
+# 3. 应用前复权（回测推荐）
+adjuster = PriceAdjuster(client)
+adjusted_data = adjuster.forward_adjust(data, '000001.SZ')
+
+# 4. 保存到本地数据库
+manager = DataManager(DATA_STORAGE_PATH)
+manager.save_market_data(adjusted_data, 'daily', '000001.SZ')
+
+# 5. 增量更新
+new_records = manager.incremental_update(
+    retriever,
+    ['000001.SZ', '600000.SH'],
+    'daily'
+)
+print(f"更新了 {new_records} 条新记录")
+
+# 6. 查询数据
+loaded_data = manager.load_market_data(
+    'daily',
+    stock_code='000001.SZ',
+    start_date='20240601',
+    end_date='20240630'
+)
+```
+
+### 策略开发快速入门
+
 ### 运行回测
 
 ```bash
@@ -358,3 +539,128 @@ MANUAL_CONFIRM = True        # 人工确认
 ## License
 
 MIT
+
+---
+
+## API文档
+
+### 核心模块文档
+
+- **XtDataClient**: [src/xtdata_client.py](src/xtdata_client.py) - XtData API客户端封装
+- **DataRetriever**: [src/data_retriever.py](src/data_retriever.py) - 市场数据获取器
+- **PriceAdjuster**: [src/price_adjuster.py](src/price_adjuster.py) - 价格复权处理器
+- **FundamentalHandler**: [src/fundamental_handler.py](src/fundamental_handler.py) - 基本面数据处理器
+- **IndustryMapper**: [src/industry_mapper.py](src/industry_mapper.py) - 行业分类映射器
+- **DataManager**: [src/data_manager.py](src/data_manager.py) - 数据持久化管理器
+- **Visualizer**: [src/visualizer.py](src/visualizer.py) - 金融数据可视化器
+
+### 详细文档
+
+- [XtData API参考](docs/xtdata.md) - XtData接口详细说明
+- [示例脚本说明](examples/README.md) - 所有示例脚本的使用指南
+- [120天学习计划](docs/plan.md) - 完整的培训计划和学习路径
+
+### 在线资源
+
+- [XtQuant官方文档](https://dict.thinktrader.net/nativeApi/start_now.html)
+- [Pandas官方文档](https://pandas.pydata.org/docs/)
+- [Hypothesis测试库](https://hypothesis.readthedocs.io/)
+
+---
+
+## 常见问题
+
+### Q1: 如何获取XtData账户？
+
+访问国金证券QMT官网注册账户，获取API密钥。
+
+### Q2: 前复权和后复权有什么区别？
+
+- **前复权**: 保持当前价格不变，向前调整历史价格。适用于回测，避免未来函数。
+- **后复权**: 保持历史价格不变，向后调整当前价格。适用于展示，保持价格连续性。
+
+详见：[examples/02_price_adjustment.py](examples/02_price_adjustment.py)
+
+### Q3: 什么是未来函数？如何避免？
+
+未来函数是指在历史分析中使用了未来信息的错误。系统通过以下机制防范：
+
+1. 基本面数据使用公告日期（announce_date）而非报告期
+2. 回测默认使用前复权
+3. 数据对齐采用保守策略
+
+详见：[examples/10_lookahead_bias_demo.py](examples/10_lookahead_bias_demo.py)
+
+### Q4: 如何处理数据缺失？
+
+系统提供多层数据质量检查：
+
+```python
+from src.data_manager import DataManager
+
+manager = DataManager('./data')
+# 数据验证会自动检测：
+# - 异常值（负价格、极端值）
+# - 数据缺口
+# - 数据类型错误
+```
+
+### Q5: 增量更新如何工作？
+
+增量更新自动识别最后更新日期，仅获取新数据：
+
+```python
+# 首次运行：下载全部历史数据
+manager.incremental_update(retriever, ['000001.SZ'], 'daily')
+
+# 后续运行：仅下载新增数据
+manager.incremental_update(retriever, ['000001.SZ'], 'daily')
+```
+
+---
+
+## 贡献指南
+
+欢迎提交Issue和Pull Request！
+
+### 开发环境设置
+
+```bash
+# 安装开发依赖
+pip install -r requirements-dev.txt
+
+# 运行测试
+pytest tests/
+
+# 运行属性测试
+pytest tests/property/ -v --hypothesis-show-statistics
+
+# 生成覆盖率报告
+pytest --cov=src --cov-report=html
+```
+
+### 代码规范
+
+- 遵循PEP 8代码风格
+- 所有公共函数必须有文档字符串
+- 新功能需要添加单元测试和属性测试
+- 提交前运行完整测试套件
+
+---
+
+## 致谢
+
+本项目基于国金证券XtQuant平台开发，感谢国金证券提供的API支持。
+
+---
+
+## 联系方式
+
+如有问题或建议，请通过以下方式联系：
+
+- 提交Issue: [GitHub Issues](https://github.com/your-repo/issues)
+- 邮件: your-email@example.com
+
+---
+
+**Happy Quant Trading! 📈**
