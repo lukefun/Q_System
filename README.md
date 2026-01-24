@@ -8,9 +8,9 @@
 
 **新手入门？** 请从这里开始：
 
-- 📖 [**学习路径导航**](STUDY_PATH.md) - 完整的两周学习路线图
-- 📚 [**完整学习指南**](docs/LEARNING_GUIDE.md) - 详细的每日学习计划
-- ⚡ [**快速参考手册**](docs/QUICK_REFERENCE.md) - 常用命令和代码速查
+- 📖 [**学习路径导航**](docs/guides/STUDY_PATH.md) - 完整的两周学习路线图
+- 📚 [**完整学习指南**](docs/guides/LEARNING_GUIDE.md) - 详细的每日学习计划
+- ⚡ [**快速参考手册**](docs/guides/QUICK_REFERENCE.md) - 常用命令和代码速查
 
 **已经熟悉项目？** 快速跳转：
 
@@ -69,68 +69,89 @@ Q_System/
 ├── main.py              # 回测启动脚本
 ├── run_live.py          # 实盘启动脚本
 ├── config.py            # 配置文件（API密钥、存储路径）
-├── check.bat            # 环境快速检查 (双击运行)
-├── start_isolated.bat   # 隔离模式启动器 (推荐)
 ├── requirements.txt     # 生产依赖
 ├── requirements-dev.txt # 开发依赖
 ├── environment.yml      # Conda 环境配置
 │
-├── src/                 # 数据工程模块 (Week 2)
-│   ├── xtdata_client.py       # XtData API客户端封装
-│   ├── data_retriever.py      # 数据获取器
-│   ├── price_adjuster.py      # 价格复权处理器
+├── core/                # 核心引擎模块
+│   ├── README.md            # 模块说明
+│   ├── engine.py            # 回测引擎
+│   ├── live_runner.py       # 实盘引擎
+│   ├── strategy.py          # 策略基类
+│   └── context.py           # 上下文对象 (核心交互接口)
+│
+├── src/                 # 数据工程模块
+│   ├── README.md            # 模块说明
+│   ├── xtdata_client.py     # XtData API客户端封装
+│   ├── data_retriever.py    # 数据获取器
+│   ├── price_adjuster.py    # 价格复权处理器
 │   ├── fundamental_handler.py # 基本面数据处理器
-│   ├── industry_mapper.py     # 行业分类映射器
-│   ├── data_manager.py        # 数据持久化管理器
-│   ├── visualizer.py          # 金融数据可视化器
-│   ├── data_alignment.py      # 数据对齐工具
+│   ├── industry_mapper.py   # 行业分类映射器
+│   ├── data_manager.py      # 数据持久化管理器
+│   ├── visualizer.py        # 金融数据可视化器
+│   ├── data_alignment.py    # 数据对齐工具
 │   └── full_market_downloader.py  # 全市场数据下载
 │
-├── core/                # 交易引擎模块
-│   ├── engine.py        # 回测引擎
-│   ├── live_runner.py   # 实盘引擎
-│   ├── strategy.py      # 策略基类
-│   └── context.py       # 上下文对象 (核心交互接口)
-│
 ├── strategies/          # 策略实现
-│   └── double_ma.py     # 双均线策略示例
+│   ├── README.md            # 策略开发指南
+│   └── double_ma.py         # 双均线策略示例
 │
-├── examples/            # 示例脚本 (Week 2 学习材料)
-│   ├── 01_basic_data_retrieval.py    # 数据获取示例
-│   ├── 02_price_adjustment.py        # 价格复权示例
-│   ├── 03_fundamental_data.py        # 基本面数据示例
-│   ├── 04_industry_classification.py # 行业分类示例
-│   ├── 05_data_persistence.py        # 数据持久化示例
-│   ├── 06_visualization.py           # 可视化示例
-│   ├── 07_incremental_update.py      # 增量更新示例
-│   ├── 09_build_local_database.py    # 构建本地数据库
-│   └── README.md                      # 示例说明文档
+├── examples/            # 示例脚本
+│   ├── README.md            # 示例说明文档
+│   ├── 01_basic_data_retrieval.py
+│   ├── 02_price_adjustment.py
+│   └── ...
 │
-├── exercises/           # 练习题
-│   ├── week1/          # 第一周：Python基础
-│   └── week2/          # 第二周：数据工程 (待创建)
+├── exercises/           # 学习练习
+│   ├── README.md            # 练习说明
+│   ├── week1/               # 第一周：Python基础
+│   └── week2/               # 第二周：数据工程
 │
-├── tests/              # 测试套件
-│   ├── unit/           # 单元测试
-│   ├── property/       # 基于属性的测试
-│   └── integration/    # 集成测试
+├── tests/               # 测试套件
+│   ├── README.md            # 测试说明
+│   ├── conftest.py          # pytest 配置
+│   ├── unit/                # 单元测试
+│   ├── property/            # 属性测试
+│   └── integration/         # 集成测试
 │
-├── data/               # 本地数据存储
-│   ├── market_data.h5  # HDF5数据库
-│   └── csv_exports/    # CSV导出文件
+├── data/                # 本地数据存储
+│   ├── README.md            # 数据目录说明
+│   ├── market_data.h5       # HDF5数据库
+│   ├── cache/               # 缓存目录
+│   └── csv_exports/         # CSV导出文件
 │
-├── logs/               # 日志文件
+├── logs/                # 日志文件
 │
-├── scripts/            # 工具脚本
-│   ├── check_env.py    # 环境验证脚本
-│   ├── setup_env.bat   # 一键环境配置
-│   └── fix_env_isolation.bat  # 环境隔离修复
+├── scripts/             # 工具脚本
+│   ├── README.md            # 脚本说明
+│   ├── setup/               # 环境配置脚本
+│   │   ├── setup_env.bat
+│   │   ├── setup_env.ps1
+│   │   ├── scripts\setup\start_isolated.bat
+│   │   └── start_isolated.ps1
+│   ├── verify/              # 验证脚本
+│   │   ├── check_env.py
+│   │   └── verify_week2_setup.py
+│   └── utils/               # 工具脚本
+│       ├── scripts\utils\check.bat
+│       └── git_commit_all.bat
 │
-└── docs/               # 文档
-    ├── ENVIRONMENT.md  # 环境管理详细文档
-    ├── SETUP_GUIDE.md  # 新机器配置指南
-    ├── xtdata.md       # XtData API文档
-    └── plan.md         # 120天学习计划
+└── docs/                # 文档
+    ├── README.md            # 文档目录说明
+    ├── guides/              # 用户指南
+    │   ├── LEARNING_GUIDE.md
+    │   ├── QUICK_REFERENCE.md
+    │   ├── SETUP_GUIDE.md
+    │   └── STUDY_PATH.md
+    ├── api/                 # API 文档
+    │   ├── xtdata.md
+    │   └── xttrader.md
+    ├── plans/               # 计划文档
+    │   └── plan.md
+    ├── reports/             # 任务验证报告
+    │   └── TASK_*.md
+    └── notes/               # 学习笔记
+        └── week1_*.md
 ```
 
 ## 环境配置
@@ -166,7 +187,7 @@ git clone <repository-url>
 cd Q_System
 
 # 2. 一键配置 (双击运行)
-scripts\setup_env.bat
+scripts\setup\setup_env.bat
 ```
 
 该脚本会自动：创建 quants 环境 → 安装依赖 → 安装 xtquant → 验证环境
@@ -180,7 +201,7 @@ scripts\setup_env.bat
 conda activate quants
 
 # 2. 验证环境
-python scripts/check_env.py
+python scripts/verify/check_env.py
 
 # 3. 如有缺失依赖，补充安装
 pip install -r requirements.txt
@@ -194,7 +215,7 @@ pip install -r requirements.txt
 
 ```bash
 conda activate quants
-python scripts/check_env.py
+python scripts/verify/check_env.py
 # 如果看到 "[WARN] 检测到 X 个 site-packages 路径，可能存在版本混乱"
 ```
 
@@ -202,7 +223,7 @@ python scripts/check_env.py
 
 ```bash
 # 双击此脚本启动开发环境
-start_isolated.bat
+scripts\setup\start_isolated.bat
 ```
 
 该脚本设置 `PYTHONNOUSERSITE=1`，禁用用户全局包，确保只使用 conda 环境。
@@ -211,7 +232,7 @@ start_isolated.bat
 
 ```bash
 # 重新安装包到 conda 环境
-scripts\fix_env_isolation.bat
+scripts\setup\fix_env_isolation.bat
 ```
 
 ### 场景四：手动从零创建环境
@@ -246,7 +267,7 @@ pip install -r requirements.txt
 pip install xtquant
 
 # 5. 验证
-python scripts/check_env.py
+python scripts/verify/check_env.py
 ```
 
 ### 场景五：从 environment.yml 恢复环境
@@ -272,7 +293,7 @@ pip install xtquant
 
 ```bash
 # 双击运行，自动配置隔离环境
-start_isolated.bat
+scripts\setup\start_isolated.bat
 
 # 然后在打开的窗口中运行
 python main.py
@@ -303,14 +324,14 @@ conda run -n quants python main.py
 
 ```bash
 # 双击运行
-check.bat
+scripts\utils\check.bat
 ```
 
 ### 详细检查
 
 ```bash
 conda activate quants
-python scripts/check_env.py
+python scripts/verify/check_env.py
 ```
 
 ### 验证通过标准
@@ -323,7 +344,7 @@ python scripts/check_env.py
 [PASS] 项目模块        ← 全部可导入
 ```
 
-> 详细文档: [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) | [docs/SETUP_GUIDE.md](docs/SETUP_GUIDE.md)
+> 详细文档: [docs/guides/ENVIRONMENT.md](docs/guides/ENVIRONMENT.md) | [docs/guides/SETUP_GUIDE.md](docs/guides/SETUP_GUIDE.md)
 
 ## 快速开始
 
@@ -570,9 +591,9 @@ MIT
 
 ### 详细文档
 
-- [XtData API参考](docs/xtdata.md) - XtData接口详细说明
+- [XtData API参考](docs/api/xtdata.md) - XtData接口详细说明
 - [示例脚本说明](examples/README.md) - 所有示例脚本的使用指南
-- [120天学习计划](docs/plan.md) - 完整的培训计划和学习路径
+- [120天学习计划](docs/plans/plan.md) - 完整的培训计划和学习路径
 
 ### 在线资源
 
@@ -673,8 +694,8 @@ pytest --cov=src --cov-report=html
 如有问题或建议，请通过以下方式联系：
 
 - 提交Issue: [GitHub Issues](https://github.com/your-repo/issues)
-- 邮件: your-email@example.com
+- 邮件: <your-email@example.com>
 
 ---
 
-**Happy Quant Trading! 📈**
+## Happy Quant Trading! 📈

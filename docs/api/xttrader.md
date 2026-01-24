@@ -584,6 +584,7 @@ float_profit | float | 浮动盈亏
 open_date | str | 开仓日期，股票不需要
 position_profit | float | 持仓盈亏，股票不需要
 
+```
 ### 期货持仓统计XtPositionStatistics
 
 | 属性                               | 类型     | 注释                  |

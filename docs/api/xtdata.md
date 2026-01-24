@@ -622,7 +622,7 @@ get_trading_time(stockcode)
 
   - 跨天时以当前天0点为起始，前一天为负，下一天多86400
 
-  - ```
+  - ```text
     #需要转换为datetime时，可以用以下方法转换
     import datetime as dt
     dt.datetime.combine(dt.date.today(), dt.time()) + dt.timedelta(seconds = 34200)
@@ -815,6 +815,7 @@ get_financial_data(stock_list, table_list=[], start_time='', end_time='', report
       'report_time'     #截止日期
       'announce_time' #披露日期
       ```
+
 - 返回
 
   - dict 数据集 { stock1 : datas1, stock2 : data2, ... }

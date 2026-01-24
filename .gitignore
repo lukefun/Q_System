@@ -30,6 +30,7 @@ logs/
 
 # 数据缓存 (XtQuant下载的数据可能较大)
 data/
+!data/README.md
 data/*.csv
 data/*.pkl
 data/*.h5
