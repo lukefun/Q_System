@@ -8,9 +8,20 @@ Day 1: 环境配置验证
 运行方式:
     conda activate quants
     python exercises/week1/day1_env_check.py
+
+# === 练习1: 检查Python版本 ===
+# === 练习2: 测试xtquant导入 ===
+# === 练习3: 测试项目模块导入 ===
+
 """
 
-import sys
+import sys  # 导入sys模块，用于检查Python版本和路径信息，
+            # 例如：
+            # sys.version_info 返回Python版本信息，
+            # sys.path 返回模块搜索路径列表，
+            # 可以用于检查模块是否正确导入，
+            # 或者在运行时动态修改模块搜索路径。
+            # 参考文档: https://docs.python.org/3/library/sys.html
 
 # === 练习1: 检查Python版本 ===
 def exercise_1_check_python_version():
@@ -25,7 +36,21 @@ def exercise_1_check_python_version():
     print("练习1: 检查Python版本")
     print("=" * 50)
     
-    version = sys.version_info
+    version = sys.version_info          # 获取当前Python版本信息，是一个命名元组，包含 major, minor, micro 等字段，
+                                        # 例如：sys.version_info(major=3, minor=8, micro=13, releaselevel='final', serial=0)
+                                        # 可以通过 version.major, version.minor, version.micro 访问具体版本号
+                                        # 参考文档: https://docs.python.org/3/library/sys.html#sys.version_info
+                                        # MiniQMT 官方要求 Python 3.8.x 版本
+                                        # 例如：3.8.10, 3.8.13 等
+                                        # 注意：不同的操作系统和环境可能会有不同的Python版本，确保使用正确的版本非常重要。
+                                        # 如果版本不正确，可能会导致xtquant等模块无法正常工作。
+                                        # 建议使用Anaconda创建专门的Python 3.8环境。
+                                        # 例如：conda create -n quants python=3.8
+                                        # 然后激活环境：conda activate quants
+                                        # 之后再运行本脚本进行验证。
+                                        # 运行本脚本后，如果版本正确，会显示 ✓ Python版本正确 (3.8.x)
+                                        # 否则会显示 ✗ Python版本不正确，需要3.8.x
+
     print(f"当前Python版本: {version.major}.{version.minor}.{version.micro}")
     print(f"Python执行路径: {sys.executable}")
     
@@ -38,7 +63,11 @@ def exercise_1_check_python_version():
 
 
 # === 练习2: 测试xtquant导入 ===
-from datetime import datetime # 导入datetime以防止未使用导入警告
+from datetime import datetime # 导入datetime以防止未使用导入警告，用于将时间戳转换为日期字符串，方便阅读，
+                                # 例如：2023-10-10 15:30:00，
+                                # 转换为日期字符串后为：2023-10-10，
+                                # 方便查看和分析数据。
+
 def exercise_2_test_xtquant_import():
     """
     练习2: 测试xtquant模块是否可以正常导入
@@ -52,43 +81,112 @@ def exercise_2_test_xtquant_import():
     print("练习2: 测试xtquant导入")
     print("=" * 50)
     
-    try:
-        from xtquant import xtdata
+    try:                                                # 尝试导入xtquant模块，
+                                                        # 如果导入失败，会抛出ImportError异常
+                                                        # 例如：如果没有安装xtquant模块，会抛出ImportError异常
+                                                        # 可以使用conda安装xtquant模块：conda install -c conda-forge xtquant
+
+        from xtquant import xtdata  # xtdata模块用于获取行情数据，例如：股票、期货、期权等
         print("✓ xtdata 模块导入成功")
         
         # 测试获取交易日列表
-        trading_dates = xtdata.get_trading_dates('SH')
+        trading_dates = xtdata.get_trading_dates('SH')  # 获取上海市场的交易日列表，
+                                                        # 例如：['2023-10-10', '2023-10-11', ...]
+                                                        # 注意：返回的是字符串列表，每个元素都是日期字符串，格式为YYYY-MM-DD
+                                                        # 例如：2023-10-10 15:30:00，
+                                                        # 转换为日期字符串后为：2023-10-10，
+                                                        # 方便查看和分析数据。
 
         if trading_dates and len(trading_dates) > 0:
 
 
             # xtdata 通常返回毫秒时间戳（int），转换为 YYYY-MM-DD
             def _to_date_str(ts):
-                try:
-                    ts_int = int(ts)
-                    return datetime.fromtimestamp(ts_int / 1000).strftime('%Y-%m-%d')
-                except Exception:
-                    return str(ts)
-            readable_dates = [_to_date_str(d) for d in trading_dates]
+                # 转换为日期字符串，例如：2023-10-10 15:30:00 -> 2023-10-10
+                # 注意：xtdata 通常返回毫秒时间戳（int），需要除以1000转换为秒
+                # 参考文档: https://docs.python.org/3/library/datetime.html#datetime.datetime.fromtimestamp
+                # 例如：2023-10-10 15:30:00 的时间戳为 1696952200000，
+                # 转换为秒后为 1696952200，
+                # 再转换为日期字符串为 2023-10-10
+                # 方便查看和分析数据。
 
-            print(f"✓ 获取交易日成功，共 {len(readable_dates)} 个交易日")
-            print(f"  最近5个交易日: {readable_dates[-5:]}")
+                # 确保ts是整数类型，否则转换为字符串返回
+                try:                                                                    # 捕获异常，防止转换失败
+                                                                                        # 例如：如果ts不是整数类型，可能会导致转换失败
+                    ts_int = int(ts)                                                    # 确保是整数类型，
+                                                                                        # 例如：1696952200000 -> 1696952200
+                                                                                        # 方便进行时间戳转换
+                                                                                        # 注意：如果ts不是整数类型，可能会导致转换失败
+                                                                                        # 需要进行异常处理
+                                                                                        # 参考文档: https://docs.python.org/3/library/functions.html#int
+
+                    return datetime.fromtimestamp(ts_int / 1000).strftime('%Y-%m-%d')   # 转换为日期字符串，格式为YYYY-MM-DD
+                except Exception:                                                       # 捕获所有异常
+                    return str(ts)                                                      # 如果转换失败，返回原始字符串
+                
+
+            readable_dates = [_to_date_str(d) for d in trading_dates]                   # 转换为可读日期字符串列表
+                                                                                        # readable_dates：新生成的 “可读日期字符串列表”（结果）
+                                                                                        # _to_date_str(d)：对每个元素的 “转换操作”（调用自定义函数处理日期）
+                                                                                        # d：循环中遍历原始列表时，每个元素的临时变量名（可自定义，比如date）
+                                                                                        # trading_dates：原始列表（存储着未转换的日期数据，比如时间戳、datetime 对象、数字等）
+
+
+            print(f"✓ 获取交易日成功，共 {len(readable_dates)} 个交易日")                 # 显示获取到的交易日数量
+
+            print(f"  最近5个交易日: {readable_dates[-5:]}")                             # 显示最近5个交易日，print(readable_dates[-5:])：切片操作，获取列表的最后5个元素
         else:
             print("⚠ 获取交易日返回空数据")
             
         return True
         
-    except ImportError as e:
+    except ImportError as e:                                                            # 捕获导入异常
         print(f"✗ xtquant 导入失败: {e}")
         print("  请确保已安装: pip install xtquant")
         return False
-    except Exception as e:
-        print(f"⚠ xtquant 导入成功，但测试时出错: {e}")
+    
+    except Exception as e:                                                              # 捕获其他异常，
+                                                                                        # 例如：如果MiniQMT未启动，可能会导致获取交易日失败
+        print(f"⚠ xtquant 导入成功，但测试时出错: error = {e}")
+        print("\n" + "· " * 50)
+
         print("  这可能是因为MiniQMT未启动")
         return True  # 导入成功即可
 
 
 # === 练习3: 测试项目模块导入 ===
+"""
+这个函数的核心目的是 **验证项目模块化设计的可用性，确保核心组件和策略模块能被正确导入**，为后续项目运行（如回测、策略执行）扫清基础依赖障碍。
+
+具体可以拆解为3个关键作用：
+
+### 1. 解决“导入路径问题”，保证跨目录运行兼容性
+项目采用模块化设计（`core/` 存核心组件、`strategies/` 存策略实现），但Python默认只会从当前运行目录、系统环境变量等路径搜索模块。
+如果脚本在项目子目录（如 `exercises/week1/`）运行，直接导入 `core.context` 或 `strategies.double_ma` 会失败。
+
+函数通过：
+- 计算项目根目录（通过多次 `os.path.dirname` 从当前脚本路径向上推导）；
+- 将根目录添加到 `sys.path`（Python的模块搜索路径）；
+确保无论在项目哪个子目录运行该脚本，都能找到 `core/` 和 `strategies/` 下的模块。
+
+### 2. 批量验证关键模块/类的导入有效性
+函数明确测试了项目最核心的4个模块+类组合：
+- `core.context.Context`：核心上下文组件（可能存储回测配置、数据等）；
+- `core.engine.BacktestEngine`：回测引擎（项目核心执行入口）；
+- `core.strategy.BaseStrategy`：策略基类（所有自定义策略的父类，模块化设计的基础）；
+- `strategies.double_ma.DoubleMAStrategy`：具体策略实现（验证策略模块与核心模块的依赖连通性）。
+
+这些是项目运行的“基础骨架”，只要它们能正常导入，就说明模块化设计的依赖关系、文件结构没有问题。
+
+### 3. 快速定位导入错误，降低后续开发风险
+如果导入失败（如文件缺失、模块名写错、依赖缺失），函数会明确输出失败的模块+类名和错误原因（比如 `ModuleNotFoundError`、`AttributeError`），帮助开发者快速排查问题：
+- 若 `core.context.Context` 失败：可能是 `core/context.py` 不存在，或文件中没有定义 `Context` 类；
+- 若 `strategies.double_ma.DoubleMAStrategy` 失败：可能是策略文件缺失，或未正确继承 `BaseStrategy` 导致类定义异常。
+
+### 总结
+这个函数是项目的“基础依赖检查工具”——通过统一导入路径、批量验证核心模块，确保项目的模块化设计能正常工作，避免后续开发（如编写回测逻辑、扩展策略）时因“导入失败”浪费时间，本质是为项目的稳定性和可开发性做前置验证。
+"""
+
 def exercise_3_test_project_import():
     """
     练习3: 测试项目核心模块是否可以正常导入
@@ -97,33 +195,67 @@ def exercise_3_test_project_import():
     - 项目采用模块化设计
     - core/ 包含核心组件
     - strategies/ 包含策略实现
+
     """
     print("\n" + "=" * 50)
     print("练习3: 测试项目模块导入")
     print("=" * 50)
     
-    import os
-    # 添加项目根目录到路径
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    if project_root not in sys.path:
-        sys.path.insert(0, project_root)
+    import os               # 导入os模块，用于处理路径，
+                            # 例如：获取当前文件的绝对路径、拼接路径等
     
-    modules_to_test = [
-        ('core.context', 'Context'),
+    # 添加项目根目录到路径，以便导入自定义模块，
+    # 例如：如果在strategies/目录下运行此脚本，
+    # 则需要添加../core/到路径，以便导入context.py等模块
+
+    # 1. 先找到项目根目录的路径
+    # os.path.abspath(__file__) → 拿到当前脚本的绝对路径（比如 /xxx/Q_System/exercises/week1/day1_env_check.py）
+    # 连续三次 os.path.dirname() → 每次往上跳一级目录，最终拿到根目录 /xxx/Q_System/
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))     # 获取项目根目录路径，
+                                                                                                    # 例如：/path/to/Q_System/exercises/week1/day1_env_check.py -> /path/to/Q_System
+                                                                                                    # 参考文档: https://docs.python.org/3/library/os.path.html#os.path.abspath
+                                                                                                    # os.path.abspath(__file__)：获取当前文件的绝对路径
+                                                                                                    # os.path.dirname(...)：获取上级目录路径
+                                                                                                    # 嵌套调用三次dirname，获取项目根目录路径
+                                                                                                    # 方便导入项目模块
+
+    # 将项目根目录添加到sys.path，
+    # 以便在运行时动态导入项目模块，
+    # 例如：如果在strategies/目录下运行此脚本，
+    # 则需要添加../core/到路径，以便导入context.py等模块
+
+    # 2. 把根目录加入 sys.path（先判断是否已存在，避免重复加）
+    # sys.path 是一个列表，存储着Python解释器在导入模块时搜索的路径
+    # 将根目录添加到 sys.path”，本质是 告诉 Python：“我的项目核心模块（core/、strategies/）在这个根目录下，你导入的时候记得去这里找，从而解决跨目录导入模块失败的问题。
+    if project_root not in sys.path:                                                                # 检查项目根目录是否已在sys.path中，
+                                                                                                    # 避免重复添加
+        sys.path.insert(0, project_root)                                                            # 插在列表第0位，让Python优先查根目录（避免和其他路径冲突）
+                                                                                                    # 将项目根目录添加到sys.path的开头，以确保优先搜索项目模块
+    
+    # 需要测试导入的模块列表
+    modules_to_test = [                                                                             # 定义需要测试导入的模块列表，
+        ('core.context', 'Context'),                                                                # 每个元素是一个元组，包含模块名和类名
         ('core.engine', 'BacktestEngine'),
         ('core.strategy', 'BaseStrategy'),
         ('strategies.double_ma', 'DoubleMAStrategy'),
     ]
     
-    all_ok = True
-    for module_name, class_name in modules_to_test:
-        try:
-            module = __import__(module_name, fromlist=[class_name])
-            cls = getattr(module, class_name)
-            print(f"✓ {module_name}.{class_name}")
-        except Exception as e:
-            print(f"✗ {module_name}.{class_name} - {e}")
-            all_ok = False
+    all_ok = True                                                                                    # 标记所有导入是否成功
+
+    # 3. 批量测试导入模块
+    print("\n测试项目核心模块导入:")
+
+    for module_name, class_name in modules_to_test:                                                  # 遍历需要测试的模块列表
+        # 打印正在测试的模块信息
+        print(f"测试模块: {module_name}.{class_name}")
+
+        try:                                                                                         # 尝试导入模块和类
+            module = __import__(module_name, fromlist=[class_name])                                  # 动态导入模块
+            cls = getattr(module, class_name)                                                        # 获取类对象  
+            print(f"✓ {module_name}.{class_name}")                                                   # 导入成功
+        except Exception as e:                                                                       # 捕获导入异常
+            print(f"✗ {module_name}.{class_name} - {e}")                                             # 导入失败，打印异常信息
+            all_ok = False                                                                           # 标记导入失败
     
     return all_ok
 
@@ -136,9 +268,9 @@ def verify():
     print("=" * 50)
     
     results = {
-        'Python版本': exercise_1_check_python_version(),
-        'xtquant导入': exercise_2_test_xtquant_import(),
-        '项目模块导入': exercise_3_test_project_import(),
+        'Python版本': exercise_1_check_python_version(),     # 运行练习1，检查Python版本
+        'xtquant导入': exercise_2_test_xtquant_import(),     # 运行练习2，测试xtquant导入
+        '项目模块导入': exercise_3_test_project_import(),    # 运行练习3，测试项目模块导入
     }
     
     print("\n" + "=" * 50)
@@ -146,6 +278,9 @@ def verify():
     print("=" * 50)
     
     all_passed = True
+
+    # 输出每项检查结果，
+    # 并根据结果判断是否全部通过
     for name, passed in results.items():
         status = "✓ PASS" if passed else "✗ FAIL"
         print(f"  {status} - {name}")
