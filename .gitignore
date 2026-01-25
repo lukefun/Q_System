@@ -46,3 +46,6 @@ data/csv_exports/
 *.h5
 *.hdf5
 .hypothesis/
+
+# 其他参考文件夹
+xbx.ignore/
